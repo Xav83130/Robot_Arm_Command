@@ -1,0 +1,307 @@
+<Desktop>:
+
+#connection
+
+    GridLayout:
+        orientation: 'horizontal'
+        rows: 2
+        cols: 3
+        row_default_height: 26
+        size: 550, 55
+        pos: 0, 530
+        Label:
+            text: 'Port :'
+            font_size: 18
+            bold: True
+            size_hint_x: None
+        TextInput:
+            height: 32
+            width: 200
+            text: 'port'
+            size_text: 14
+            multiline: False
+            size_hint_x: 50
+        Button:
+            height: 33
+            width: 100
+            text: 'Connection'
+            size_hint_x: None
+        Label:
+            pos: 0, 485
+            text: 'Baud :'
+            font_size: 18
+            bold: True
+            size_hint_x: None
+        TextInput:
+            height: 32
+            width: 200
+            pos: 90, 520
+            text: '115200'
+            size_text: 14
+            multiline: False
+            size_hint_x: 50
+
+#logo
+
+    BoxLayout:
+        size: 130, 150
+        pos: 655, 480
+        Image:
+            source: 'logo_RobotArmCommand.png'
+
+#etat
+
+    BoxLayout:
+        size: 70, 60
+        pos: 560, 525
+        ToggleButton:
+            text: 'Etât'
+
+#ligne1
+
+    BoxLayout:
+        canvas:
+            Fbo:
+                size: (200, 200)
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                size: (780, 1.5)
+                pos: (10, 510)
+
+#coordonées des axes
+
+    GridLayout:
+        orientation: 'horizontal'
+        size: 780, 35
+        pos: 1, 460
+        rows: 1
+        cols: 6
+        Label:
+            text: 'X:'
+            size_hint_x: .2
+            font_size: 24
+            bold: True
+        TextInput:
+            text: '200.00'
+            font_size: 22
+            size_hint_x: .5
+            multiline: False
+            bold: True
+        Label:
+            text: 'Y:'
+            size_hint_x: 0.2
+            font_size: 24
+            bold: True
+        TextInput:
+            text: '180.20'
+            font_size: 22
+            size_hint_x: .5
+            multiline: False
+            bold: True
+        Label:
+            text: 'Z:'
+            size_hint_x: 0.2
+            font_size: 24
+            bold: True
+        TextInput:
+            text: '300.00'
+            font_size: 22
+            size_hint_x: .5
+            multiline: False
+            bold: True
+
+#ligne2
+
+    BoxLayout:
+        canvas:
+            Fbo:
+                size: (200, 200)
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                size: (780, 1.5)
+                pos: (10, 445)
+
+
+#commandes GRBL
+
+    GridLayout:
+        orientation: 'horizontal'
+        size: 410, 45
+        pos: 10, 390
+        rows: 2
+        cols: 5
+        spacing: .5
+        padding: .2
+        Button:
+            text: '$X'
+        Button:
+            text: 'Reset XYZ'
+        Button:
+            text: 'Reset X'
+        Button:
+            text: 'Reset Y'
+        Button:
+            text: 'Reset Z'
+        Button:
+            text: 'Home'
+        Button:
+            text: 'Feed hold'
+        Button:
+            text: 'Cycle start'
+        Button:
+            text: 'Reset GRBL'
+        Button:
+            text: ''
+
+
+#ligne3 - vertical
+
+    BoxLayout:
+        canvas:
+            Fbo:
+                size: (200, 200)
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                size: (1.5, 350)
+                pos: (440, 50)
+
+
+#boutons Gcode
+
+    GridLayout:
+        orientation: 'horizontal'
+        size: 410, 45
+        pos: 10, 330
+        rows: 2
+        cols: 4
+        spacing: .5
+        padding: .2
+        Button:
+            text: 'Save pos.'
+        Button:
+            text: 'Lire'
+        Button:
+            text: 'Export'
+        Button:
+            text: 'Effacer'
+
+
+#Text input Gcode
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size: 410, 250
+        pos: 10, 72
+        TextInput:
+            text: 'Gcode'
+            font_size: 14
+            size_hint_x: .5
+            multiline: True
+            bold: True
+
+
+#text input commande et/ou gcode
+
+    GridLayout:
+        orientation: 'horizontal'
+        size: 410, 31
+        pos: 10, 20
+        rows: 1
+        cols: 2
+        spacing: .5
+        padding: .2
+        TextInput:
+            text: 'Commande'
+            font_size: 14
+            size_hint_x: 3
+            multiline: False
+            bold: True
+        Button:
+            text: 'Envoyer'
+
+
+#Jog
+
+    GridLayout:
+        orientation: 'horizontal'
+        size: 300, 200
+        pos: 470, 200
+        rows: 3
+        cols: 4
+        spacing: 3
+        padding: 3
+        Label:
+            text: ''
+        Button:
+            text: 'X+'
+        Label:
+            text: ''
+        Button:
+            text: 'Z+'
+        Button:
+            text: 'Y-'
+        Label:
+            text: ''
+        Button:
+            text: 'Y+'
+        Label:
+            text: ''
+        Label:
+            text: ''
+        Button:
+            text: 'X-'
+        Label:
+            text: ''
+        Button:
+            text: 'Z-'
+
+#slider vitesse
+
+    BoxLayout:
+        pos: 453, 60
+        size: 290, 20
+        Slider:
+            id: curseur_vitesse
+            orientation: 'horizontal'
+            size_hint_x: 2
+            min: 50
+            max: 800
+            background_width: '15sp'
+            cursor_size: (20, 20)
+            step: 50
+        Label:
+            text: "Vitesse: " +str(round(root.ids.curseur_vitesse.value,1))
+            padding: 2, 2
+            bold: True
+
+#slider pas
+
+    BoxLayout:
+        pos: 453, 120
+        size: 290, 20
+        Slider:
+            id: curseur_pas
+            orientation: 'horizontal'
+            size_hint_x: 2
+            min: 0.1
+            max: 10
+            background_width: '15sp'
+            cursor_size: (20, 20)
+            step: 0.1
+        Label:
+            text: "Pas: " +str(round(root.ids.curseur_pas.value,1))
+            padding: 2, 2
+            bold: True
+
+#version
+
+    BoxLayout:
+        pos: 700, 1
+        size: 20, 30
+        Label:
+            text: 'Robot Arm Command V0.1'
+            italic: True
+            font_size: 12
