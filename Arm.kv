@@ -15,13 +15,15 @@
             bold: True
             size_hint_x: None
         TextInput:
+            id: serial_port
             height: 32
             width: 200
-            text: 'port'
+            text: ''
             size_text: 14
             multiline: False
             size_hint_x: 50
         Button:
+            id: connect_button
             height: 33
             width: 100
             text: 'Connection'
@@ -33,10 +35,11 @@
             bold: True
             size_hint_x: None
         TextInput:
+            id: baudrate
             height: 32
             width: 200
             pos: 90, 520
-            text: '115200'
+            text: ''
             size_text: 14
             multiline: False
             size_hint_x: 50
