@@ -11,6 +11,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
+from kivy.logger import Logger
 
 # definition du port serie et du baudrate
 SERIAL_PORT = '/dev/tty.wchusbserialfd130'
@@ -22,18 +23,17 @@ SERIAL_BAUDRATE = 115200
 
 # Quand j'appui sur le bouton "connection" je me connecte à l'arduino
 class Desktop(Widget):
-    def conect(self):
-        serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
-        time.sleep(2)  # Attend que GRBL s'initialise
-
-
-class Desktop(Widget):
     pass
 
 
 class ArmApp(App):
     def build(self):
         return Desktop()
+
+    def connect(self):
+        Logger.info("Coucou !!")
+        self.serial = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
+        time.sleep(2)  # Attend que GRBL s'initialise
 
 
 windows = ArmApp()
