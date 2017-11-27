@@ -29,10 +29,11 @@ class ArmApp(App):
         print("Je me connecte au port serie !!")
         self.serial = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
         time.sleep(2)  # Attend que GRBL s'initialise
+        self.serial.flushInput()  # vide la file d'attente série
 
     def disconnect(self): # deconnection au port serie
         print("Je me déconnecte du port serie !!")
-        self.serial = serial.Serial()
+        self.serial = serial.Serial = None
 
     def alarm(self): # Kill alarm lock
         print("Je retire l'alarme")

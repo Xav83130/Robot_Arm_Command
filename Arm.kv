@@ -235,12 +235,21 @@
         Button:
             text: 'Envoyer'
 
+#Retour infos GRBL
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size: 340, 80
+        pos: 450, 355
+        CodeInput:
+            text: ''
+
 #Jog
 
     GridLayout:
         orientation: 'horizontal'
         size: 300, 200
-        pos: 470, 200
+        pos: 470, 135
         rows: 3
         cols: 4
         spacing: 3
@@ -275,7 +284,7 @@
 #slider vitesse
 
     BoxLayout:
-        pos: 453, 60
+        pos: 453, 40
         size: 290, 20
         Slider:
             id: curseur_vitesse
@@ -294,7 +303,7 @@
 #slider pas
 
     BoxLayout:
-        pos: 453, 120
+        pos: 453, 90
         size: 290, 20
         Slider:
             id: curseur_pas
