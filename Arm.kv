@@ -151,6 +151,7 @@
             on_press: app.alarm()
         Button:
             text: 'Reset XYZ'
+            on_press: app.rst_xyz()
         Button:
             text: 'Reset X'
         Button:
@@ -264,12 +265,15 @@
             text: ''
         Button:
             text: 'Z+'
+            on_press: app.z_move_pos()
         Button:
             text: 'Y-'
+            on_press: app.y_move_neg()
         Label:
             text: ''
         Button:
             text: 'Y+'
+            on_press: app.y_move_pos()
         Label:
             text: ''
         Label:
@@ -281,6 +285,7 @@
             text: ''
         Button:
             text: 'Z-'
+            on_press: app.z_move_neg()
 
 #slider vitesse
 

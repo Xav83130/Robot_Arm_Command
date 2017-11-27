@@ -25,7 +25,6 @@ class Desktop(Widget):
 class ArmApp(App):
 
 
-
     def build(self):
         return Desktop()
 
@@ -50,17 +49,40 @@ class ArmApp(App):
         print("Je me déconnecte du port serie !!")
         self.serial = serial.Serial = None
 
+    def _send_command(self, g_code): # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
+        self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
+
     def alarm(self): # Kill alarm lock
         print("Je retire l'alarme")
-        self.serial.write("$X\r\n".encode('utf-8'))
+        self._send_command("$X")
 
-    def x_move_pos(self): # move X+
+    def rst_xyz(self):  # Reset XYZ
+        print("Reset XYZ remise a zero XYZ")
+        self._send_command("")
+
+    def x_move_pos(self): # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
         print("mouvement de X en positif")
-        self.serial.write("G91X1\r\n".encode('utf-8'))
+        self._send_command("G91X1")
 
     def x_move_neg(self): # move X-
         print("mouvement de X en negatif")
-        self.serial.write("G91X-1\r\n".encode('utf-8'))
+        self._send_command("G91X-1")
+
+    def y_move_pos(self): # move Y+
+        print("mouvement de Y en positif")
+        self._send_command("G91Y1")
+
+    def y_move_neg(self): # move Y-
+        print("mouvement de Y en negatif")
+        self._send_command("G91Y-1")
+
+    def z_move_pos(self): # move Z+
+        print("mouvement de Z en positif")
+        self._send_command("G91Z1")
+
+    def z_move_neg(self): # move Z-
+        print("mouvement de Z en negatif")
+        self._send_command("G91Z-1")
 
 
 windows = ArmApp()
