@@ -3,35 +3,21 @@
 import serial
 import serial.serialutil
 import time
-import multiprocessing
-
-import kivy
 
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.logger import Logger
-#from kivy.uix.boxlayout import BoxLayout
-#from kivy.uix.textinput import TextInput
-#from kivy.uix.image import Image
-from kivy.properties import ObjectProperty
+
 
 class Desktop(Widget):
     pass
 
 
 class ArmApp(App):
-
-
     def build(self):
         return Desktop()
-
-    def viewport(self): # Le port serie entré dans le textinput est utilisé pour la connection serie
-        pass
-
-    def baudrate(self): # Utilise le baudrate du textinput ligne 39 du .kv pour se connecter
-        pass
 
     def idle(self): # change d'etat le Togglebutton ligne 64 du .kv
         # si je suis connecté au port serie
@@ -39,7 +25,7 @@ class ArmApp(App):
         pass
 
     def connect(self): # connection au port serie
-        Logger.warn("Connecting to serial device: {} with baudrate: {}".format(
+        Logger.info("Connecting to serial device: {} with baudrate: {}".format(
                     self.root.ids.serialport.text,
                     self.root.ids.baudrate.text))
         # int() est nécessaire car la valeur renvoyé par .text est une str, et le type attendu est un int
