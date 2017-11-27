@@ -50,7 +50,7 @@ class ArmApp(App):
         self.serial = serial.Serial = None
 
     def _send_command(self, g_code): # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
-        self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
+        self.serial.write("{}\r\n\r\n".format(g_code).encode('utf-8'))
 
     def alarm(self): # Kill alarm lock
         print("Je retire l'alarme")
