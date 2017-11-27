@@ -84,5 +84,6 @@ class ArmApp(App):
         self._send_command("G91Z-1")
 
 
-windows = ArmApp()
-windows.run()
+if __name__ == '__main__':
+    windows = ArmApp()
+    windows.run()
