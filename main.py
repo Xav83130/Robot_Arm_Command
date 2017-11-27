@@ -17,10 +17,6 @@ SERIAL_PORT = '/dev/tty.wchusbserialfd130'
 SERIAL_BAUDRATE = 115200
 
 
-
-# ser = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE) #cette ligne suffit pour se connecter
-
-# Quand j'appui sur le bouton "connection" je me connecte à l'arduino
 class Desktop(Widget):
     pass
 
