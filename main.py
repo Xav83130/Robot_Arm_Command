@@ -8,9 +8,10 @@ import kivy
 
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.image import Image
+#from kivy.uix.boxlayout import BoxLayout
+#from kivy.uix.textinput import TextInput
+#from kivy.uix.image import Image
+from kivy.properties import ObjectProperty
 
 # definition du port serie et du baudrate
 SERIAL_PORT = '/dev/tty.wchusbserialfd130'
@@ -22,8 +23,22 @@ class Desktop(Widget):
 
 
 class ArmApp(App):
+
+
+
     def build(self):
         return Desktop()
+
+    def viewport(self): # Le port serie entré dans le textinput est utilisé pour la connection serie
+        pass
+
+    def baudrate(self): # Utilise le baudrate du textinput ligne 39 du .kv pour se connecter
+        pass
+
+    def idle(self): # change d'etat le Togglebutton ligne 64 du .kv
+        # si je suis connecté au port serie
+        # alors le bouton change d'etat 'state: down'
+        pass
 
     def connect(self): # connection au port serie
         print("Je me connecte au port serie !!")

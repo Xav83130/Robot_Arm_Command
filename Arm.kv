@@ -4,6 +4,7 @@
 
     GridLayout:
         orientation: 'horizontal'
+        serialport: serialport
         rows: 2
         cols: 3
         row_default_height: 26
@@ -15,7 +16,7 @@
             bold: True
             size_hint_x: None
         TextInput:
-            id: serial_port
+            id: serialport
             height: 32
             width: 200
             text: ''
@@ -35,15 +36,13 @@
             font_size: 18
             bold: True
             size_hint_x: None
-        TextInput:
+        Spinner:
             id: baudrate
             height: 32
             width: 200
             pos: 90, 520
-            text: ''
-            size_text: 14
-            multiline: False
-            size_hint_x: 50
+            text: 'Baud'
+            values: ["9600","14400","19200","28800","38400","57600","115200"]
         Button:
             id: disconnect
             height: 33
@@ -63,10 +62,12 @@
 #etat
 
     BoxLayout:
-        size: 70, 60
-        pos: 560, 525
+        id: idle
+        size: 70, 55
+        pos: 560, 530
         ToggleButton:
-            text: 'Etât'
+            text: 'IDLE'
+            state:
 
 #ligne1
 
