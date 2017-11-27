@@ -1,21 +1,14 @@
 # kivy.require('1.10.0')
 
 import serial
+import serial.serialutil
 import time
-import multiprocessing
-
-import kivy
 
 from kivy.app import App
 from kivy.uix.widget import Widget
-#from kivy.uix.boxlayout import BoxLayout
-#from kivy.uix.textinput import TextInput
-#from kivy.uix.image import Image
-from kivy.properties import ObjectProperty
-
-# definition du port serie et du baudrate
-SERIAL_PORT = '/dev/tty.wchusbserialfd130'
-SERIAL_BAUDRATE = 115200
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.logger import Logger
 
 
 class Desktop(Widget):
@@ -23,16 +16,8 @@ class Desktop(Widget):
 
 
 class ArmApp(App):
-
-
     def build(self):
         return Desktop()
-
-    def viewport(self): # Le port serie entré dans le textinput est utilisé pour la connection serie
-        pass
-
-    def baudrate(self): # Utilise le baudrate du textinput ligne 39 du .kv pour se connecter
-        pass
 
     def idle(self): # change d'etat le Togglebutton ligne 64 du .kv
         # si je suis connecté au port serie
@@ -40,10 +25,24 @@ class ArmApp(App):
         pass
 
     def connect(self): # connection au port serie
-        print("Je me connecte au port serie !!")
-        self.serial = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
-        time.sleep(2)  # Attend que GRBL s'initialise
-        self.serial.flushInput()  # vide la file d'attente série
+        Logger.info("Connecting to serial device: {} with baudrate: {}".format(
+                    self.root.ids.serialport.text,
+                    self.root.ids.baudrate.text))
+        # int() est nécessaire car la valeur renvoyé par .text est une str, et le type attendu est un int
+        try:
+            self.serial = serial.Serial(self.root.ids.serialport.text,
+                                        int(self.root.ids.baudrate.text))
+
+            time.sleep(2)  # Attend que GRBL s'initialise
+            self.serial.flushInput()  # vide la file d'attente série
+        except serial.serialutil.SerialException as e:
+            popup = Popup(title='System error',
+                          content=Label(text="Can't connect to {}: {}".format(
+                              self.root.ids.serialport.text,
+                              str(e)
+                          ))
+            )
+            popup.open()
 
     def disconnect(self): # deconnection au port serie
         print("Je me déconnecte du port serie !!")
@@ -85,5 +84,6 @@ class ArmApp(App):
         self._send_command("G91Z-1")
 
 
-windows = ArmApp()
-windows.run()
+if __name__ == '__main__':
+    windows = ArmApp()
+    windows.run()
