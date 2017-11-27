@@ -8,15 +8,11 @@ import kivy
 
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.logger import Logger
 #from kivy.uix.boxlayout import BoxLayout
 #from kivy.uix.textinput import TextInput
 #from kivy.uix.image import Image
 from kivy.properties import ObjectProperty
-
-# definition du port serie et du baudrate
-SERIAL_PORT = '/dev/tty.wchusbserialfd130'
-SERIAL_BAUDRATE = 115200
-
 
 class Desktop(Widget):
     pass
@@ -40,8 +36,11 @@ class ArmApp(App):
         pass
 
     def connect(self): # connection au port serie
-        print("Je me connecte au port serie !!")
-        self.serial = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
+        Logger.warn("Connecting to serial device: {} with baudrate: {}".format(
+                    self.root.ids.serialport.text,
+                    self.root.ids.baudrate.text))
+        self.serial = serial.Serial(self.root.ids.serialport.text,
+                                    int(self.root.ids.baudrate.text))
         time.sleep(2)  # Attend que GRBL s'initialise
         self.serial.flushInput()  # vide la file d'attente série
 
