@@ -17,7 +17,7 @@ SERIAL_PORT = '/dev/tty.wchusbserialfd130'
 SERIAL_BAUDRATE = 115200
 
 
-# connection au port serie
+
 # ser = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE) #cette ligne suffit pour se connecter
 
 # Quand j'appui sur le bouton "connection" je me connecte à l'arduino
@@ -29,10 +29,26 @@ class ArmApp(App):
     def build(self):
         return Desktop()
 
-    def connect(self):
+    def connect(self): # connection au port serie
         print("Je me connecte au port serie !!")
         self.serial = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE)
         time.sleep(2)  # Attend que GRBL s'initialise
+
+    def disconnect(self): # deconnection au port serie
+        print("Je me déconnecte du port serie !!")
+        self.serial = serial.Serial()
+
+    def alarm(self): # Kill alarm lock
+        print("Je retire l'alarme")
+        self.serial.write("$X\r\n".encode('utf-8'))
+
+    def x_move_pos(self): # move X+
+        print("mouvement de X en positif")
+        self.serial.write("G91X1\r\n".encode('utf-8'))
+
+    def x_move_neg(self): # move X-
+        print("mouvement de X en negatif")
+        self.serial.write("G91X-1\r\n".encode('utf-8'))
 
 
 windows = ArmApp()

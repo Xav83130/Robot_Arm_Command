@@ -44,6 +44,13 @@
             size_text: 14
             multiline: False
             size_hint_x: 50
+        Button:
+            id: disconnect
+            height: 33
+            width: 100
+            text: 'Déconnecter'
+            on_press: app.disconnect()
+            size_hint_x: None
 
 #logo
 
@@ -87,7 +94,7 @@
             font_size: 24
             bold: True
         TextInput:
-            text: '200.00'
+            text: ''
             font_size: 22
             size_hint_x: .5
             multiline: False
@@ -140,6 +147,7 @@
         padding: .2
         Button:
             text: '$X'
+            on_press: app.alarm()
         Button:
             text: 'Reset XYZ'
         Button:
@@ -241,6 +249,7 @@
             text: ''
         Button:
             text: 'X+'
+            on_press: app.x_move_pos()
         Label:
             text: ''
         Button:
@@ -257,6 +266,7 @@
             text: ''
         Button:
             text: 'X-'
+            on_press: app.x_move_neg()
         Label:
             text: ''
         Button:
