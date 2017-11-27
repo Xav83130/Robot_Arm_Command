@@ -1,6 +1,7 @@
 # kivy.require('1.10.0')
 
 import serial
+import serial.serialutil
 import time
 import multiprocessing
 
@@ -8,6 +9,8 @@ import kivy
 
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 from kivy.logger import Logger
 #from kivy.uix.boxlayout import BoxLayout
 #from kivy.uix.textinput import TextInput
@@ -39,10 +42,21 @@ class ArmApp(App):
         Logger.warn("Connecting to serial device: {} with baudrate: {}".format(
                     self.root.ids.serialport.text,
                     self.root.ids.baudrate.text))
-        self.serial = serial.Serial(self.root.ids.serialport.text,
-                                    int(self.root.ids.baudrate.text))
-        time.sleep(2)  # Attend que GRBL s'initialise
-        self.serial.flushInput()  # vide la file d'attente série
+        # int() est nécessaire car la valeur renvoyé par .text est une str, et le type attendu est un int
+        try:
+            self.serial = serial.Serial(self.root.ids.serialport.text,
+                                        int(self.root.ids.baudrate.text))
+
+            time.sleep(2)  # Attend que GRBL s'initialise
+            self.serial.flushInput()  # vide la file d'attente série
+        except serial.serialutil.SerialException as e:
+            popup = Popup(title='System error',
+                          content=Label(text="Can't connect to {}: {}".format(
+                              self.root.ids.serialport.text,
+                              str(e)
+                          ))
+            )
+            popup.open()
 
     def disconnect(self): # deconnection au port serie
         print("Je me déconnecte du port serie !!")
