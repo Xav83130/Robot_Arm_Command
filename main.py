@@ -28,9 +28,9 @@ class ArmApp(App):
         #self.idle = bool(self.root.ids.idle.state)
         # si je suis connecté au port serie
         # alors le bouton change d'etat "state: 'down' "
-        #pass
+        pass
 
-    def connect(self): # connection au port serie
+    def connect(self):
         Logger.info("Connecting to serial device: {} with baudrate: {}".format(
                     self.root.ids.serialport.text,
                     self.root.ids.baudrate.text))
@@ -38,7 +38,6 @@ class ArmApp(App):
         try:
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
-
             time.sleep(2)  # Attend que GRBL s'initialise
             self.serial.flushInput()  # vide la file d'attente série
         except serial.serialutil.SerialException as e:
