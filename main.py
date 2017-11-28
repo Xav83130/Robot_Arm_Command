@@ -25,16 +25,16 @@ class ArmApp(App):
     def build(self):
         return Desktop()
 
-    def idle(self):
-        # change d'etat le Togglebutton ligne 64 du .kv
-        #self.idle = bool(self.root.ids.idle.state)
-        # si je suis connecté au port serie
-        # alors le bouton change d'etat "state: 'down' "
+    def idle(self): # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
+#        for self.connect() in serial.Serial:
+#            if self.serial == self.connect():
+#                serial.state = 'normal'
+#            else:
+#                serial.state = 'down'
         pass
 
 
     def connect(self):
-
         Logger.info("Connecting to serial device: {} with baudrate: {}".format(
                     self.root.ids.serialport.text,
                     self.root.ids.baudrate.text))
