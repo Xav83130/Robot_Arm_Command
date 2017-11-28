@@ -9,15 +9,12 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.logger import Logger
-<<<<<<< HEAD
 
-=======
 from kivy.uix.behaviors import ToggleButtonBehavior
 #from kivy.uix.boxlayout import BoxLayout
 #from kivy.uix.textinput import TextInput
 #from kivy.uix.image import Image
 from kivy.properties import ObjectProperty
->>>>>>> serial-widgets
 
 class Desktop(Widget):
     pass
