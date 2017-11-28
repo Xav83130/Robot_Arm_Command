@@ -20,17 +20,21 @@ class Desktop(Widget):
     pass
 
 
+
 class ArmApp(App):
     def build(self):
         return Desktop()
 
-    def idle(self): # change d'etat le Togglebutton ligne 64 du .kv
+    def idle(self):
+        # change d'etat le Togglebutton ligne 64 du .kv
         #self.idle = bool(self.root.ids.idle.state)
         # si je suis connecté au port serie
         # alors le bouton change d'etat "state: 'down' "
         pass
 
+
     def connect(self):
+
         Logger.info("Connecting to serial device: {} with baudrate: {}".format(
                     self.root.ids.serialport.text,
                     self.root.ids.baudrate.text))
@@ -42,7 +46,9 @@ class ArmApp(App):
             self.serial.flushInput()  # vide la file d'attente série
         except serial.serialutil.SerialException as e:
             popup = Popup(title='System error',
-                          content=Label(text="Can't connect to {}: {}".format(
+                          size_hint=(None, None),
+                          size=(400, 100),
+                          content=Label(text="Can't connect to {}".format(
                               self.root.ids.serialport.text,
                               str(e)
                           ))
