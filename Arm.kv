@@ -62,12 +62,13 @@
 #etat
 
     BoxLayout:
-        id: idle
+        idle: idle
         size: 70, 55
         pos: 560, 530
         ToggleButton:
+            id: idle
             text: 'IDLE'
-            state:
+            state: 'normal'
 
 #ligne1
 
@@ -154,18 +155,25 @@
             on_press: app.rst_xyz()
         Button:
             text: 'Reset X'
+            on_press: app.rst_x()
         Button:
             text: 'Reset Y'
+            on_press: app.rst_y()
         Button:
             text: 'Reset Z'
+            on_press: app.rst_z()
         Button:
             text: 'Home'
+            on_press: app.home()
         Button:
             text: 'Feed hold'
+            on_press: app.feed_hold()
         Button:
             text: 'Cycle start'
+            on_press: app.cycle_start()
         Button:
             text: 'Reset GRBL'
+            on_press: app.rst_grbl()
         Button:
             text: ''
 
