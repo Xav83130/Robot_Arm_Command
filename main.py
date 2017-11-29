@@ -16,6 +16,14 @@ class ArmApp(App):
     def build(self):
         return Desktop()
 
+    def idle(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
+#        for self.connect() in serial.Serial:
+#            self.idle = bool(self.root.ids.idle.state)
+#        if self.serial == self.connect():
+#            serial.state = 'normal'
+#        else:
+#            serial.state = 'down'
+        pass
 
     def connect(self):
         usb_serial.connect(self)
