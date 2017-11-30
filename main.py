@@ -20,6 +20,17 @@ class Desktop(Widget):
 
 
 class ArmApp(App):
+    def __init__(self):
+        # Un constructeur (__init__) est appele au moment de la creation d'une instance de classe (Donc l'objet)
+        # Cette methode permet de creer des variables de classe
+        self.serial = None
+        # Position initiales des axes
+        self.axe_x = 0
+        self.axe_y = 0
+        self.axe_z = 0
+        # La ligne d'en desous permet d'appeler le constructeur de la classe App, important !
+        super().__init__()
+
     def build(self):
         return Desktop()
 
