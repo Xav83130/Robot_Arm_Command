@@ -25,9 +25,9 @@ class ArmApp(App):
 
     def idle(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
         if self.serial is not None and self.serial.is_open:
-            self.root.ids.idle.state = 'normal'
+            self.state = 'normal'
         else:
-            self.root.ids.idle.state = 'down'
+            self.state = 'down'
 
     def connect(self):
 
