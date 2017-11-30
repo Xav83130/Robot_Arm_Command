@@ -38,6 +38,7 @@ class ArmApp(App):
         try:
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
+            self.idle()
             #        time.sleep(2)  # Attend que GRBL s'initialise
             #        self.root.serial.flushInput()  # vide la file d'attente série
         except serial.serialutil.SerialException as e:
