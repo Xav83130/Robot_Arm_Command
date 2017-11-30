@@ -4,7 +4,7 @@
 
     GridLayout:
         orientation: 'horizontal'
-        serialport: serialport
+        #serialport: serialport
         rows: 2
         cols: 3
         row_default_height: 26
@@ -20,7 +20,7 @@
             height: 32
             width: 200
             text: ''
-            values: ["app.serialSelect()"]
+            values: app.serial_list()
             size_text: 14
             multiline: False
             size_hint_x: 50
