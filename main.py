@@ -112,6 +112,11 @@ class ArmApp(App):
         print("mouvement de Z en negatif")
         self._send_command("G91Z-1")
 
+    def serial_list(self):
+        ports = usb_serial.serial_list()
+        print("port list: {}".format(",".join(ports)))    
+        return ports
+
 
 if __name__ == '__main__':
     ArmApp().run()
