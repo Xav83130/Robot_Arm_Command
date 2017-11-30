@@ -56,7 +56,8 @@ class ArmApp(App):
 
     def disconnect(self):  # deconnection au port serie
         print("Je me déconnecte du port serie !!")
-        self.serial = self.serial = None
+        self.serial.close()
+        self.serial = None
 
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
