@@ -74,7 +74,7 @@ class ArmApp(App):
 
     def alarm(self):  # Kill alarm lock
         print("Je retire l'alarme")
-        self._send_command("$X")
+        self._send_command("$X")    # commande OK
 
     def rst_grbl(self):  # Reset GRBL
         print("Je retire reset GRBL")
@@ -90,23 +90,23 @@ class ArmApp(App):
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
-        self._send_command("G92 X0 Y0 Z0")  # commande gcode a revoir
+        self._send_command("G30.1")  # commande OK
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
-        self._send_command("G10 P0 L20 X0")  # commande gcode a revoir
+        self._send_command("G92 X0")  # commande gcode a revoir
 
     def rst_y(self):  # Reset X
         print("Reset Y remise a zero Y")
-        self._send_command("G92Y0")  # commande gcode a revoir
+        self._send_command("G92 Y0")  # commande gcode a revoir
 
     def rst_z(self):  # Reset Z
         print("Reset Z remise a zero Z")
-        self._send_command("G92Z0")  # commande gcode a revoir
+        self._send_command("G92 Z0")  # commande gcode a revoir
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")
-        self._send_command("G30")
+        self._send_command("G30")    # commande OK
 
     def x_move_pos(self):  # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
         print("mouvement de X en positif")
