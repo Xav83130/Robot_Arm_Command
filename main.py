@@ -138,9 +138,11 @@ class ArmApp(App):
         self._send_command("G91Z-1")
 
     def serial_list(self):
-        ports = usb_serial.serial_list()
-        print("port list: {}".format(",".join(ports)))
-        return ports
+        serial_ports = []
+        for p in serial.tools.list_ports.comports():
+            serial_ports.append(p[0])
+
+        return serial_ports
 
 
 if __name__ == '__main__':
