@@ -15,11 +15,12 @@
             font_size: 18
             bold: True
             size_hint_x: None
-        TextInput:
-            id: serialport
+        Spinner:
+            id: serialselect
             height: 32
             width: 200
-            text: '/dev/tty.wchusbserialfd130'
+            text: ''
+            values: ["app.serialSelect()"]
             size_text: 14
             multiline: False
             size_hint_x: 50

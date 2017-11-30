@@ -2,11 +2,22 @@
 
 import serial
 import serial.serialutil
+import serial.tools.list_ports
 
 
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.logger import Logger
+
+def serialSelect(self):
+
+    self.ports = list(serial.tools.list_ports.comports())
+    print(self.ports)
+    for p in self.ports:
+        self.portOptions.append(p[0])
+
+    self.selection = StringVar()
+    self.selection.set("Set USB Port")
 
 
 def connect(self):
