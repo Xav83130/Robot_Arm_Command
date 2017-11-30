@@ -25,9 +25,9 @@ class ArmApp(App):
 
     def idle(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
         if self.serial is not None and self.serial.is_open:
-            self.root.ids.idle.state = 'normal'
-        else:
             self.root.ids.idle.state = 'down'
+        else:
+            self.root.ids.idle.state = 'normal'
 
     def connect(self):
 
@@ -56,6 +56,7 @@ class ArmApp(App):
         print("Je me déconnecte du port serie !!")
         self.serial.close()
         self.serial = None
+        self.idle()
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         self.serial.write("{}\r\n\r\n".format(g_code).encode('utf-8'))
@@ -78,11 +79,11 @@ class ArmApp(App):
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
-        self._send_command("G92X0Y0Z0")  # commande gcode a revoir
+        self._send_command("G92 X0 Y0 Z0")  # commande gcode a revoir
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
-        self._send_command("G10P0L20X0")  # commande gcode a revoir
+        self._send_command("G10 P0 L20 X0")  # commande gcode a revoir
 
     def rst_y(self):  # Reset X
         print("Reset Y remise a zero Y")
@@ -119,6 +120,9 @@ class ArmApp(App):
     def z_move_neg(self):  # move Z-
         print("mouvement de Z en negatif")
         self._send_command("G91Z-1")
+
+    def motors_off(self):
+        self._send_command('M18')
 
     def serial_list(self):
         serial_ports = []
