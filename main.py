@@ -35,11 +35,11 @@ class ArmApp(App):
     def build(self):
         return Desktop()
 
-    def idle(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
+    def view_connect(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
         if self.serial is not None and self.serial.is_open:
-            self.root.ids.idle.state = 'down'
+            self.root.ids.viewconnect.state = 'down'
         else:
-            self.root.ids.idle.state = 'normal'
+            self.root.ids.viewconnect.state = 'normal'
 
     def get_line(self):
         data = self.serial.readline()
@@ -59,7 +59,7 @@ class ArmApp(App):
         try:
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
-            self.idle()
+            self.view_connect()
             while True:
                 line = self.get_line()
                 pprint.pprint(line)
@@ -80,7 +80,7 @@ class ArmApp(App):
         print("Je me déconnecte du port serie !!")
         self.serial.close()
         self.serial = None
-        self.idle()
+        self.view_connect()
 
     def serial_list(self):
         serial_ports = []
@@ -88,9 +88,9 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
-    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans
-        self.root.ids.cmd_results.text
-        pass
+    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
+        self.print_lines()
+        self.root.ids.cmd_results.text = pprint.pprint(line)
 
     def idle(self):
         input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"
