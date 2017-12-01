@@ -241,13 +241,16 @@
         spacing: .5
         padding: .2
         TextInput:
-            text: 'commande'
+            id: cmd_send_alone
+            on_text_validate: app._send_command(self.g_code) ; self.text = "\n"
             font_size: 14
             size_hint_x: 3
             multiline: False
             bold: True
         Button:
+            id: cmd_send
             text: 'Envoyer'
+            on_press: app._send_command(self.g_code)
 
 #Retour infos GRBL --------------------------
 
