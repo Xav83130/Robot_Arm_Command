@@ -45,10 +45,13 @@ class ArmApp(App):
         data = self.serial.readline()
         return data.decode("utf-8")
 
-    def print_lines(self):
+    def get_lines(self):
+        lines = []
         while self.serial.inWaiting() > 0:
             line = self.get_line()
-            pprint.pprint(line)
+            lines.append(line)
+        pprint.pprint(lines)
+        return lines
 
     def connect(self):
 
@@ -89,9 +92,8 @@ class ArmApp(App):
         return serial_ports
 
     def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
-        self.print_lines()
-        self.get_line()
-        self.root.ids.cmd_results.text = print(self.get_line())
+        lines = self.get_lines()
+        self.root.ids.cmd_results.text = lines
 
     def idle(self):
         input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"
