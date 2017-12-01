@@ -96,8 +96,8 @@ class ArmApp(App):
         self.root.ids.cmd_results.text = ", ".join(lines)
 
     def idle(self):
-        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"
-        (_, axes, _) = input.strip("<>").split("|")
+        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>" # la commande '?' me renvoi : '<Alarm,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n'
+        (_, axes, _) = input.strip("<>").split("|")      # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
         (x, y, z) = [float(_) for _ in axes.split(":")[1].split(",")]
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
@@ -124,7 +124,7 @@ class ArmApp(App):
 
     def feed_hold(self):
         print("Feed_hold ??")
-        self._send_command("?")
+        self._send_command("!")
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
@@ -132,15 +132,15 @@ class ArmApp(App):
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
-        self._send_command("G92 X0")  # commande gcode a revoir
+        self._send_command("G10 L0 X0")  # commande gcode a revoir
 
     def rst_y(self):  # Reset X
         print("Reset Y remise a zero Y")
-        self._send_command("G92 Y0")  # commande gcode a revoir
+        self._send_command("G10 L0 Y0")  # commande gcode a revoir
 
     def rst_z(self):  # Reset Z
         print("Reset Z remise a zero Z")
-        self._send_command("G92 Z0")  # commande gcode a revoir
+        self._send_command("G10 L0 Z0")  # commande gcode a revoir
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")
