@@ -102,7 +102,8 @@ class ArmApp(App):
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
-        self.serial.write("{}\n".format(g_code).encode('utf-8'))
+        self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
+        self.serial.flushInput()
         while True:
             line = self.get_line()
             pprint.pprint(line)
@@ -116,7 +117,7 @@ class ArmApp(App):
 
     def rst_grbl(self):  # Reset GRBL
         print("Reset GRBL")
-        self._send_command("0x18")  # ERREUR 'error: Expected command letter\r\n'
+        self._send_command("ctrl-x")  # ERREUR 'error: Expected command letter\r\n'
 
     def cycle_start(self):  # demarre cycle à voir si c'est utile
         print("Reprise")

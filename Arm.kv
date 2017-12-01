@@ -212,9 +212,12 @@
         spacing: .5
         padding: .2
         Button:
+            id: save_pos
             text: 'Save pos.'
         Button:
+            id: play
             text: 'Lire'
+            on_press: app._send_command(app.root.ids.cmd_send_list.text)
         Button:
             text: 'Export'
         Button:
@@ -229,7 +232,9 @@
         size: 410, 250
         pos: 10, 72
         TextInput:
-            text: 'Gcode'
+            id: cmd_send_list
+            text: 'Entrer liste de Gcode'
+            on_text_validate: app._send_command(self.g_code)
             font_size: 16
             bolt: True
             size_hint_x: .5
@@ -249,12 +254,12 @@
         padding: .2
         TextInput:
             id: cmd_send_alone
-            on_text_validate: app._send_command(self.g_code) ; self.text = " "
+            on_text_validate: app._send_command(self.g_code)
             use_bubble: True
             font_size: 16
             bold: True
             size_hint_x: 3
-            multiline: False
+            multiline: True
 
         Button:
             id: cmd_send
