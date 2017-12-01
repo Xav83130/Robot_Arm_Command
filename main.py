@@ -96,9 +96,9 @@ class ArmApp(App):
         self.root.ids.cmd_results.text = ", ".join(lines)
 
     def idle(self):
-        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>" # la commande '?' me renvoi : '<Alarm,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n'
-        (_, axes, _) = input.strip("<>").split("|")      # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
-        (x, y, z) = [float(_) for _ in axes.split(":")[1].split(",")]
+        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"               # la commande '?' me renvoi : '<Alarm,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n'
+        (_, axes, _) = input.strip("<>").split("|")                    # ou '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
+        (x, y, z) = [float(_) for _ in axes.split(":")[1].split(",")]  # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
