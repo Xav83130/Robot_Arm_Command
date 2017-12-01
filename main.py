@@ -88,9 +88,14 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
-    def view_input(self):
+    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans
         self.root.ids.cmd_results.text
         pass
+
+    def idle(self):
+        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"
+        (_, axes, _) = input.strip("<>").split("|")
+        (x, y, z) = [float(_) for _ in axes.split(":")[1].split(",")]
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
@@ -108,7 +113,7 @@ class ArmApp(App):
 
     def rst_grbl(self):  # Reset GRBL
         print("Je retire reset GRBL")
-        self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
+        self._send_command("")  # ERREUR 'error: Bad number format\r\n'
 
     def cycle_start(self):  # demarre cycle à voir si c'est utile
         print("Je demarre un cycle")
@@ -116,7 +121,7 @@ class ArmApp(App):
 
     def feed_hold(self):
         print("Feed_hold ??")
-        self._send_command("!")
+        self._send_command("?")
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
