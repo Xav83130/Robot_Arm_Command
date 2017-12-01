@@ -10,7 +10,8 @@ from kivy.logger import Logger
 import serial
 import serial.serialutil
 import serial.tools.list_ports
-
+import pprint
+import time
 
 # import usb_serial
 
@@ -40,6 +41,15 @@ class ArmApp(App):
         else:
             self.root.ids.idle.state = 'normal'
 
+    def get_line(self):
+        data = self.serial.readline()
+        return data.decode("utf-8")
+
+    def print_lines(self):
+        while self.serial.inWaiting() > 0:
+            line = self.get_line()
+            pprint.pprint(line)
+
     def connect(self):
 
         Logger.info("Connecting to serial device: {} with baudrate: {}".format(
@@ -50,6 +60,10 @@ class ArmApp(App):
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
             self.idle()
+            time.sleep(2)
+            self.print_lines()
+            received_data = self.serial.read(self.serial.inWaiting())
+            pprint.pprint(received_data)
             #        time.sleep(2)  # Attend que GRBL s'initialise
             #        self.root.serial.flushInput()  # vide la file d'attente série
         except serial.serialutil.SerialException as e:
@@ -69,8 +83,18 @@ class ArmApp(App):
         self.serial = None
         self.idle()
 
+    def serial_list(self):
+        serial_ports = []
+        for p in serial.tools.list_ports.comports():
+            serial_ports.append(p[0])
+
+        return serial_ports
+
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
+        print("g_code: {}".format(g_code))
         self.serial.write("{}\r\n\r\n".format(g_code).encode('utf-8'))
+        time.sleep(1)
+        self.print_lines()
 
     def alarm(self):  # Kill alarm lock
         print("Je retire l'alarme")
@@ -132,15 +156,9 @@ class ArmApp(App):
         print("mouvement de Z en negatif")
         self._send_command("G91Z-1")
 
-    def motors_off(self):
-        self._send_command('M18')
+    def infos(self):
+        self._send_command('$$')
 
-    def serial_list(self):
-        serial_ports = []
-        for p in serial.tools.list_ports.comports():
-            serial_ports.append(p[0])
-
-        return serial_ports
 
 
 if __name__ == '__main__':
