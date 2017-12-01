@@ -1,9 +1,9 @@
 # Robot_Arm_Command
 Python program for robot arm with GRBL
 
-# ** ATTENTION: ce programme n'est pas encore fonctionnel, en cours de dev. ** #
+# * ATTENTION: ce programme n'est pas encore fonctionnel, en cours de dev. * #
 
-# ** ATTENTION: this program is not yet functional, being dev. ** #
+# * ATTENTION: this program is not yet functional, being dev. * #
 
 Todo:
     Affichage des coordonées Wpos
