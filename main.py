@@ -60,12 +60,11 @@ class ArmApp(App):
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
             self.idle()
-            time.sleep(2)
-            self.print_lines()
-            received_data = self.serial.read(self.serial.inWaiting())
-            pprint.pprint(received_data)
-            #        time.sleep(2)  # Attend que GRBL s'initialise
-            #        self.root.serial.flushInput()  # vide la file d'attente série
+            while True:
+                line = self.get_line()
+                pprint.pprint(line)
+                if line == "['$H'|'$X' to unlock]\r\n":
+                    break
         except serial.serialutil.SerialException as e:
             popup = Popup(title='System error',
                           size_hint=(None, None),
@@ -87,14 +86,17 @@ class ArmApp(App):
         serial_ports = []
         for p in serial.tools.list_ports.comports():
             serial_ports.append(p[0])
-
         return serial_ports
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
-        self.serial.write("{}\r\n\r\n".format(g_code).encode('utf-8'))
-        time.sleep(1)
-        self.print_lines()
+        self.serial.write("{}\n".format(g_code).encode('utf-8'))
+        while True:
+            line = self.get_line()
+            pprint.pprint(line)
+            if line == 'ok\r\n':
+                break
+        return line
 
     def alarm(self):  # Kill alarm lock
         print("Je retire l'alarme")
@@ -102,7 +104,7 @@ class ArmApp(App):
 
     def rst_grbl(self):  # Reset GRBL
         print("Je retire reset GRBL")
-        self._send_command("ctrl-x")
+        self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
 
     def cycle_start(self):  # demarre cycle à voir si c'est utile
         print("Je demarre un cycle")
@@ -157,7 +159,7 @@ class ArmApp(App):
         self._send_command("G91Z-1")
 
     def infos(self):
-        self._send_command('$$')
+        self._send_command('$$')  # commande OK
 
 
 
