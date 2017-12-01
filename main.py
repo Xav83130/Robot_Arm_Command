@@ -88,6 +88,10 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
+    def view_input(self):
+        self.root.ids.cmd_results.text
+        pass
+
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
         self.serial.write("{}\n".format(g_code).encode('utf-8'))
