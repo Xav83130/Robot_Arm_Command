@@ -93,7 +93,7 @@ class ArmApp(App):
 
     def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
         lines = self.get_lines()
-        self.root.ids.cmd_results.text = lines
+        self.root.ids.cmd_results.text = ", ".join(lines)
 
     def idle(self):
         input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"
