@@ -115,15 +115,15 @@ class ArmApp(App):
         self._send_command("$X")    # commande OK
 
     def rst_grbl(self):  # Reset GRBL
-        print("Je retire reset GRBL")
-        self._send_command("")  # ERREUR 'error: Bad number format\r\n'
+        print("Reset GRBL")
+        self._send_command("0x18")  # ERREUR 'error: Expected command letter\r\n'
 
     def cycle_start(self):  # demarre cycle à voir si c'est utile
-        print("Je demarre un cycle")
+        print("Reprise")
         self._send_command("~")
 
     def feed_hold(self):
-        print("Feed_hold ??")
+        print("Pause")
         self._send_command("!")
 
     def rst_xyz(self):  # Reset XYZ
@@ -132,15 +132,15 @@ class ArmApp(App):
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
-        self._send_command("G10 L0 X0")  # commande gcode a revoir
+        self._send_command("G92 X0")  # commande gcode a revoir
 
     def rst_y(self):  # Reset X
         print("Reset Y remise a zero Y")
-        self._send_command("G10 L0 Y0")  # commande gcode a revoir
+        self._send_command("G92 Y0")  # commande gcode a revoir
 
     def rst_z(self):  # Reset Z
         print("Reset Z remise a zero Z")
-        self._send_command("G10 L0 Z0")  # commande gcode a revoir
+        self._send_command("G92 Z0")  # commande gcode a revoir
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")

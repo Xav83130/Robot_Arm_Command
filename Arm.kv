@@ -67,6 +67,7 @@
         ToggleButton:
             id: viewconnect
             text: 'Connect'
+            bolt: True
             state: 'normal'
 
 
@@ -149,8 +150,8 @@
 
     GridLayout:
         orientation: 'horizontal'
-        size: 410, 45
-        pos: 10, 390
+        size: 410, 60
+        pos: 10, 380
         rows: 2
         cols: 5
         spacing: .5
@@ -174,16 +175,16 @@
             text: 'Home'
             on_press: app.home()
         Button:
-            text: 'Feed hold'
+            text: 'Pause'
             on_press: app.feed_hold()
         Button:
-            text: 'Cycle start'
+            text: 'Reprise'
             on_press: app.cycle_start()
         Button:
             text: 'Reset GRBL'
             on_press: app.rst_grbl()
         Button:
-            text: 'infos'
+            text: 'Parametres'
             on_press: app.infos()
 
 
@@ -205,7 +206,7 @@
     GridLayout:
         orientation: 'horizontal'
         size: 410, 45
-        pos: 10, 330
+        pos: 10, 325
         rows: 2
         cols: 5
         spacing: .5
@@ -229,31 +230,32 @@
         pos: 10, 72
         TextInput:
             text: 'Gcode'
-            font_size: 14
+            font_size: 16
+            bolt: True
             size_hint_x: .5
             multiline: True
             use_bubble: True
-            bold: True
 
 
 #text input commande et/ou gcode
 
     GridLayout:
         orientation: 'horizontal'
-        size: 410, 31
+        size: 410, 33
         pos: 10, 20
         rows: 1
         cols: 2
-        spacing: .5
+        spacing: .3
         padding: .2
         TextInput:
             id: cmd_send_alone
             on_text_validate: app._send_command(self.g_code) ; self.text = " "
             use_bubble: True
-            font_size: 14
+            font_size: 16
+            bold: True
             size_hint_x: 3
             multiline: False
-            bold: True
+
         Button:
             id: cmd_send
             text: 'Envoyer'
@@ -263,40 +265,49 @@
 
     BoxLayout:
         orientation: 'horizontal'
-        size: 340, 80
-        pos: 450, 355
+        size: 340, 110
+        pos: 450, 330
         CodeInput:
             id: cmd_results
             text: ''
+            font_size: 10
             readonly: True
 
 #Jog
 
     GridLayout:
         orientation: 'horizontal'
-        size: 300, 200
-        pos: 470, 135
+        size: 300, 190
+        pos: 470, 125
         rows: 3
         cols: 4
-        spacing: 3
-        padding: 3
+        spacing: 3.5
+        padding: 3.5
         Label:
             text: ''
         Button:
             text: 'X+'
+            font_size: 28
+            bold: True
             on_press: app.x_move_pos()
         Label:
             text: ''
         Button:
             text: 'Z+'
+            font_size: 28
+            bold: True
             on_press: app.z_move_pos()
         Button:
             text: 'Y-'
+            font_size: 28
+            bold: True
             on_press: app.y_move_neg()
         Label:
             text: ''
         Button:
             text: 'Y+'
+            font_size: 28
+            bold: True
             on_press: app.y_move_pos()
         Label:
             text: ''
@@ -304,11 +315,15 @@
             text: ''
         Button:
             text: 'X-'
+            font_size: 28
+            bold: True
             on_press: app.x_move_neg()
         Label:
             text: ''
         Button:
             text: 'Z-'
+            font_size: 28
+            bold: True
             on_press: app.z_move_neg()
 
 #slider vitesse
