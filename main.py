@@ -119,11 +119,11 @@ class ArmApp(App):
         print("Reset GRBL")
         self._send_command("ctrl-x")  # ERREUR 'error: Expected command letter\r\n'
 
-    def cycle_start(self):  # demarre cycle à voir si c'est utile
+    def cycle_start(self):  # a tester
         print("Reprise")
         self._send_command("~")
 
-    def feed_hold(self):
+    def feed_hold(self):    # BUG (la pause s'effectue corrcetement mais ensuite "rond mac"
         print("Pause")
         self._send_command("!")
 
