@@ -174,6 +174,9 @@ class ArmApp(App):
     def infos(self):
         self._send_command('$$')  # commande OK
 
+    def test(self):
+        self._send_command('?')  # commande pour tests (affichage dans le terminal de Wpos et Mpos)
+
 
 
 if __name__ == '__main__':
