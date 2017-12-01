@@ -98,9 +98,10 @@
         TextInput:
             id: pos_x
             text: ''
+            readonly: True
+            multiline: False
             font_size: 22
             size_hint_x: .5
-            multiline: False
             bold: True
         Label:
             text: 'Y:'
@@ -110,6 +111,8 @@
         TextInput:
             id: pos_y
             text: ''
+            readonly: True
+            multiline: False
             font_size: 22
             size_hint_x: .5
             multiline: False
@@ -122,6 +125,8 @@
         TextInput:
             id: pos_z
             text: ''
+            readonly: True
+            multiline: False
             font_size: 22
             size_hint_x: .5
             multiline: False
@@ -227,6 +232,7 @@
             font_size: 14
             size_hint_x: .5
             multiline: True
+            use_bubble: True
             bold: True
 
 
@@ -243,6 +249,7 @@
         TextInput:
             id: cmd_send_alone
             on_text_validate: app._send_command(self.g_code) ; self.text = " "
+            use_bubble: True
             font_size: 14
             size_hint_x: 3
             multiline: False
@@ -261,6 +268,7 @@
         CodeInput:
             id: cmd_results
             text: ''
+            readonly: True
 
 #Jog
 
