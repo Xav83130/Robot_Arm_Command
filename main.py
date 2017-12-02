@@ -36,7 +36,7 @@ class ArmApp(App):
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.idle, 1)
+        Clock.schedule_interval(self.idle, 0.5)
         return Desktop()
 
     def is_connected(self):
@@ -118,6 +118,9 @@ class ArmApp(App):
         self.axe_y = float(details[1])
         self.axe_z = float(details[2])
         # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
+        self.root.ids.pos_x.text = details[0]
+        self.root.ids.pos_y.text = details[1]
+        self.root.ids.pos_z.text = details[2]
         pprint.pprint((self.axe_x, self.axe_y, self.axe_z))
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
