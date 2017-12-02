@@ -110,7 +110,7 @@ class ArmApp(App):
         if len(result) != 1:
             return
         # result[0]: '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
-        (_, axes, _) = result[0].strip("<>\r\n").split(":")
+        (_, _, axes) = result[0].strip("<>\r\n").split(":")
         # axes = "0.000,0.000,0.000,WPos"
         details = axes.split(",")
         # details = [ "0.000", "0.000", "0.000", "WPos" ]
@@ -154,7 +154,7 @@ class ArmApp(App):
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
-        self._send_command("G30.1")  # commande OK
+        self._send_command("G92X0Y0Z0")  # commande OK
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
@@ -170,7 +170,7 @@ class ArmApp(App):
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")
-        self._send_command("G92X0Y0Z0")    # commande OK
+        self._send_command("G90X0Y0Z0")    # commande OK
 
     def x_move_pos(self):  # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
         print("mouvement de X en positif")
