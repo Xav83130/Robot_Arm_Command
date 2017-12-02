@@ -36,13 +36,13 @@ class ArmApp(App):
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.idle, 0.5)
+        Clock.schedule_interval(self.position_timer, 0.5)
         return Desktop()
 
     def is_connected(self):
         return self.serial is not None and self.serial.is_open
 
-    def view_connect(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
+    def update_view_connect(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
         if self.is_connected():
             self.root.ids.viewconnect.state = 'down'
         else:
@@ -69,7 +69,7 @@ class ArmApp(App):
         try:
             self.serial = serial.Serial(self.root.ids.serialport.text,
                                         int(self.root.ids.baudrate.text))
-            self.view_connect()
+            self.update_view_connect()
             while True:
                 line = self.get_line()
                 pprint.pprint(line)
@@ -90,7 +90,7 @@ class ArmApp(App):
         print("Je me déconnecte du port serie !!")
         self.serial.close()
         self.serial = None
-        self.view_connect()
+        self.update_view_connect()
 
     def serial_list(self):
         serial_ports = []
@@ -102,7 +102,7 @@ class ArmApp(App):
         lines = self.get_lines()
         self.root.ids.cmd_results.text = ", ".join(lines)
 
-    def idle(self, delta):
+    def position_timer(self, delta):
         print("timer")
         if not self.is_connected():
             return
@@ -170,7 +170,7 @@ class ArmApp(App):
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")
-        self._send_command("G30")    # commande OK
+        self._send_command("G92X0Y0Z0")    # commande OK
 
     def x_move_pos(self):  # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
         print("mouvement de X en positif")
