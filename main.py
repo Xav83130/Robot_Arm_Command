@@ -177,6 +177,17 @@ class ArmApp(App):
     def test(self):
         self._send_command('?')  # commande pour tests (affichage dans le terminal de Wpos et Mpos)
 
+    def save(self, cmd_send_list):
+        gcode_export = open('/Users/xaviergesset/Documents/gcode.txt', 'w')
+        gcode_export.write(str(cmd_send_list))
+        gcode_export.close()
+#        popup = Popup(title='Save Gcode', # le popup stop le programme, l'enregitrement fonctionne
+#                      content=Label(Text='Save OK'),
+#                      size_hint=(None, None),
+#                      size=(400, 100)
+#                      )
+#        popup.open()
+
 
 
 if __name__ == '__main__':
