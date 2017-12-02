@@ -223,8 +223,9 @@
             text: 'Export'
             on_press: app.save(cmd_send_list.text)
         Button:
-            id: import
-            text: 'Import'
+            id: clear
+            text: 'Clear'
+            on_press: cmd_send_list.select_all(); cmd_send_list.delete_selection()
         Button:
             text: '?'
             on_press: app.test()
