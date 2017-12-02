@@ -29,9 +29,9 @@ class ArmApp(App):
         # Cette methode permet de creer des variables de classe
         self.serial = None
         # Position initiales des axes
-        self.axe_x = 0
-        self.axe_y = 0
-        self.axe_z = 0
+        self.axe_x = 0.0
+        self.axe_y = 0.0
+        self.axe_z = 0.0
         # La ligne d'en desous permet d'appeler le constructeur de la classe App, important !
         super().__init__()
 
