@@ -117,7 +117,7 @@ class ArmApp(App):
         self.axe_x = float(details[0])
         self.axe_y = float(details[1])
         self.axe_z = float(details[2])
-        (self.axe_x, self.axe_y, self.axe_z) = [float(_) for _ in axes.split(":")[1].split(",")]  # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
+        # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
         pprint.pprint((self.axe_x, self.axe_y, self.axe_z))
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
