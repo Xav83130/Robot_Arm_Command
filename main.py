@@ -106,12 +106,14 @@ class ArmApp(App):
         print("g_code: {}".format(g_code))
         self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
         self.serial.flushInput()
+        lines = []
         while True:
             line = self.get_line()
             pprint.pprint(line)
             if line == 'ok\r\n':
                 break
-        return line
+            lines.append(line)
+        return lines
 
     def alarm(self):  # Kill alarm lock
         print("Je retire l'alarme")
