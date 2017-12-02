@@ -2,11 +2,12 @@
 
 
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
-from kivy.uix.label import Label
+from kivy.clock import Clock
 from kivy.logger import Logger
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.widget import Widget
 
 import serial
 import serial.serialutil
@@ -35,10 +36,14 @@ class ArmApp(App):
         super().__init__()
 
     def build(self):
+        Clock.schedule_interval(self.idle, 1)
         return Desktop()
 
+    def is_connected(self):
+        return self.serial is not None and self.serial.is_open
+
     def view_connect(self):  # si connecté au port serie, change d'etat le Togglebutton ligne 64 du .kv en 'down'
-        if self.serial is not None and self.serial.is_open:
+        if self.is_connected():
             self.root.ids.viewconnect.state = 'down'
         else:
             self.root.ids.viewconnect.state = 'normal'
@@ -98,9 +103,15 @@ class ArmApp(App):
         self.root.ids.cmd_results.text = ", ".join(lines)
 
     def idle(self):
-        input = "<Idle|MPos:0.000,0.000,0.000|FS:0.0,0>"               # la commande '?' me renvoi : '<Alarm,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n'
-        (_, axes, _) = input.strip("<>").split("|")                    # ou '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
-        (x, y, z) = [float(_) for _ in axes.split(":")[1].split(",")]  # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
+        print("timer")
+        if not self.is_connected():
+            return
+        result = self._send_command("?")
+        if len(result) != 1:
+            return
+        (_, axes, _) = result[0].strip("<>").split("|")                    # ou '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
+        (self.axe_x, self.axe_y, self.axe_z) = [float(_) for _ in axes.split(":")[1].split(",")]  # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
+        pprint.pprint((self.axe_x, self.axe_y, self.axe_z))
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
