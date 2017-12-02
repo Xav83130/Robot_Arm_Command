@@ -14,6 +14,7 @@ import serial.tools.list_ports
 import pprint
 import time
 
+
 # import usb_serial
 
 
@@ -179,7 +180,7 @@ class ArmApp(App):
         self._send_command('?')  # commande pour tests (affichage dans le terminal de Wpos et Mpos)
 
     def save(self, cmd_send_list):
-        gcode_export = open('/Users/xaviergesset/Documents/gcode.txt', 'w')
+        gcode_export = open('Gcode.ngc', 'w')
         gcode_export.write(str(cmd_send_list))
         gcode_export.close()
         box = BoxLayout()
@@ -190,7 +191,6 @@ class ArmApp(App):
                       size_hint=(None, None),
                       size=(400, 100))
         popup.open()
-
 
 
 if __name__ == '__main__':

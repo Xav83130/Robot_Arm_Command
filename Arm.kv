@@ -219,10 +219,12 @@
             text: 'Lire'
             on_press: app._send_command(app.root.ids.cmd_send_list.text)
         Button:
+            id: export
             text: 'Export'
             on_press: app.save(cmd_send_list.text)
         Button:
-            text: ''
+            id: import
+            text: 'Import'
         Button:
             text: '?'
             on_press: app.test()
