@@ -3,6 +3,7 @@
 
 from kivy.app import App
 from kivy.uix.widget import Widget
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.logger import Logger
@@ -181,12 +182,14 @@ class ArmApp(App):
         gcode_export = open('/Users/xaviergesset/Documents/gcode.txt', 'w')
         gcode_export.write(str(cmd_send_list))
         gcode_export.close()
-#        popup = Popup(title='Save Gcode', # le popup stop le programme, l'enregitrement fonctionne
-#                      content=Label(Text='Save OK'),
-#                      size_hint=(None, None),
-#                      size=(400, 100)
-#                      )
-#        popup.open()
+        box = BoxLayout()
+        box.add_widget(Label(text='Export OK'))
+
+        popup = Popup(title='Export G-code',
+                      content=box,
+                      size_hint=(None, None),
+                      size=(400, 100))
+        popup.open()
 
 
 
