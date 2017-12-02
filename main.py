@@ -102,14 +102,21 @@ class ArmApp(App):
         lines = self.get_lines()
         self.root.ids.cmd_results.text = ", ".join(lines)
 
-    def idle(self):
+    def idle(self, delta):
         print("timer")
         if not self.is_connected():
             return
         result = self._send_command("?")
         if len(result) != 1:
             return
-        (_, axes, _) = result[0].strip("<>").split("|")                    # ou '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
+        # result[0]: '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
+        (_, axes, _) = result[0].strip("<>\r\n").split(":")
+        # axes = "0.000,0.000,0.000,WPos"
+        details = axes.split(",")
+        # details = [ "0.000", "0.000", "0.000", "WPos" ]
+        self.axe_x = float(details[0])
+        self.axe_y = float(details[1])
+        self.axe_z = float(details[2])
         (self.axe_x, self.axe_y, self.axe_z) = [float(_) for _ in axes.split(":")[1].split(",")]  # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
         pprint.pprint((self.axe_x, self.axe_y, self.axe_z))
 
