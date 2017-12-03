@@ -186,27 +186,27 @@ class ArmApp(App):
 
     def x_move_pos(self):  # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
         print("mouvement de X en positif")
-        self._send_command("G91X1")
+        self._send_command("G91X%s" % str(self.root.ids.curseur_pas.value))
 
     def x_move_neg(self):  # move X-
         print("mouvement de X en negatif")
-        self._send_command("G91X-1")
+        self._send_command("G91X-%s" % str(self.root.ids.curseur_pas.value))
 
     def y_move_pos(self):  # move Y+
         print("mouvement de Y en positif")
-        self._send_command("G91Y1")
+        self._send_command("G91Y%s" % str(self.root.ids.curseur_pas.value))
 
     def y_move_neg(self):  # move Y-
         print("mouvement de Y en negatif")
-        self._send_command("G91Y-1")
+        self._send_command("G91Y-%s" % str(self.root.ids.curseur_pas.value))
 
     def z_move_pos(self):  # move Z+
         print("mouvement de Z en positif")
-        self._send_command("G91Z1")
+        self._send_command("G91Z%s" % str(self.root.ids.curseur_pas.value))
 
     def z_move_neg(self):  # move Z-
         print("mouvement de Z en negatif")
-        self._send_command("G91Z-1")
+        self._send_command("G91Z-%s" % str(self.root.ids.curseur_pas.value))
 
     def infos(self):
         self._send_command('$$')  # commande OK
