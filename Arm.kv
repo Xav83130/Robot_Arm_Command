@@ -22,7 +22,6 @@
             values: app.serial_list()
             size_text: 14
             multiline: False
-            size_hint_x: 50
         Button:
             id: connect
             height: 33
@@ -47,15 +46,15 @@
             id: disconnect
             height: 33
             width: 100
-            text: 'Déconnecter'
+            text: 'Disconnect'
             on_press: app.disconnect()
             size_hint_x: None
 
 #logo
 
     BoxLayout:
-        size: 130, 150
-        pos: 655, 480
+        size: 138, 158
+        pos: 645, 480
         Image:
             source: 'logo_RobotArmCommand.png'
 
@@ -81,57 +80,92 @@
                 rgba: (1, 1, 1, 1)
             Rectangle:
                 size: (780, 1.5)
-                pos: (10, 510)
+                pos: (10, 515)
 
 #coordonées des axes
 
     GridLayout:
         orientation: 'horizontal'
-        size: 780, 35
-        pos: 1, 460
-        rows: 1
-        cols: 6
+        size: 780, 62
+        pos: 1, 450
+        rows: 2
+        cols: 7
+        Label:
+            text: 'Work position:'
+            font_size: 19
+            bolt: True
+            size_hint_x: .7
         Label:
             text: 'X:'
+            font_size: 19
             size_hint_x: .2
-            font_size: 24
-            bold: True
         TextInput:
-            id: pos_x
-            text: ''
+            id: wpos_x
+            text: '0,000'
+            font_size: 19
             readonly: True
             multiline: False
-            font_size: 22
             size_hint_x: .5
-            bold: True
         Label:
             text: 'Y:'
+            font_size: 19
             size_hint_x: 0.2
-            font_size: 24
-            bold: True
         TextInput:
-            id: pos_y
-            text: ''
+            id: wpos_y
+            text: '0,000'
+            font_size: 19
             readonly: True
             multiline: False
-            font_size: 22
             size_hint_x: .5
-            multiline: False
-            bold: True
         Label:
             text: 'Z:'
+            font_size: 19
             size_hint_x: 0.2
-            font_size: 24
-            bold: True
         TextInput:
-            id: pos_z
-            text: ''
+            id: wpos_z
+            text: '0,000'
+            font_size: 19
             readonly: True
             multiline: False
-            font_size: 22
             size_hint_x: .5
+        Label:
+            text: 'Machine position:'
+            font_size: 19
+            bolt: True
+            size_hint_x: .7
+        Label:
+            text: 'X:'
+            font_size: 19
+            size_hint_x: .2
+        TextInput:
+            id: mpos_x
+            text: '0,000'
+            font_size: 19
+            readonly: True
             multiline: False
-            bold: True
+            size_hint_x: .5
+        Label:
+            text: 'Y:'
+            font_size: 19
+            size_hint_x: 0.2
+        TextInput:
+            id: mpos_y
+            text: '0,000'
+            font_size: 19
+            readonly: True
+            multiline: False
+            size_hint_x: .5
+        Label:
+            text: 'Z:'
+            font_size: 19
+            size_hint_x: 0.2
+        TextInput:
+            id: mpos_z
+            text: '0,000'
+            font_size: 19
+            readonly: True
+            multiline: False
+            size_hint_x: .5
 
 #ligne2
 
@@ -175,16 +209,16 @@
             text: 'Home'
             on_press: app.home()
         Button:
-            text: 'Pause'
+            text: 'Feed Hold'
             on_press: app.feed_hold()
         Button:
-            text: 'Reprise'
+            text: 'Cycle Start'
             on_press: app.cycle_start()
         Button:
-            text: 'Reset GRBL'
+            text: 'ctrl-x'
             on_press: app.rst_grbl()
         Button:
-            text: 'Parametres'
+            text: '$$'
             on_press: app.infos()
 
 
@@ -208,7 +242,7 @@
         size: 410, 45
         pos: 10, 325
         rows: 2
-        cols: 5
+        cols: 4
         spacing: .5
         padding: .2
         Button:
@@ -216,7 +250,7 @@
             text: 'Save pos.'
         Button:
             id: play
-            text: 'Lire'
+            text: 'Start'
             on_press: app._send_command(app.root.ids.cmd_send_list.text)
         Button:
             id: export
@@ -226,9 +260,7 @@
             id: clear
             text: 'Clear'
             on_press: cmd_send_list.select_all(); cmd_send_list.delete_selection()
-        Button:
-            text: '?'
-            on_press: app.test()
+
 
 #Text input Gcode
 
@@ -276,8 +308,8 @@
 
     BoxLayout:
         orientation: 'horizontal'
-        size: 340, 110
-        pos: 450, 330
+        size: 335, 140
+        pos: 447, 301
         CodeInput:
             id: cmd_results
             text: ''
@@ -288,7 +320,7 @@
 
     GridLayout:
         orientation: 'horizontal'
-        size: 300, 190
+        size: 290, 170
         pos: 470, 125
         rows: 3
         cols: 4

@@ -29,14 +29,17 @@ class ArmApp(App):
         # Cette methode permet de creer des variables de classe
         self.serial = None
         # Position initiales des axes
-        self.axe_x = 0.0
-        self.axe_y = 0.0
-        self.axe_z = 0.0
+        self.wp_axe_x = 0.0
+        self.wp_axe_y = 0.0
+        self.wp_axe_z = 0.0
+        self.mp_axe_x = 0.0
+        self.mp_axe_y = 0.0
+        self.mp_axe_z = 0.0
         # La ligne d'en desous permet d'appeler le constructeur de la classe App, important !
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.position_timer, 0.5)
+        Clock.schedule_interval(self.position_timer, 0.1)
         return Desktop()
 
     def is_connected(self):
@@ -110,18 +113,27 @@ class ArmApp(App):
         if len(result) != 1:
             return
         # result[0]: '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
-        (_, _, axes) = result[0].strip("<>\r\n").split(":")
-        # axes = "0.000,0.000,0.000,WPos"
-        details = axes.split(",")
-        # details = [ "0.000", "0.000", "0.000", "WPos" ]
-        self.axe_x = float(details[0])
-        self.axe_y = float(details[1])
-        self.axe_z = float(details[2])
+        (_, maxes, waxes) = result[0].strip("<>\r\n").split(":")
+        # maxes = "0.000,0.000,0.000,WPos"
+        m_details = maxes.split(",")
+        w_details = waxes.split(",")
+        # w_details = [ "0.000", "0.000", "0.000" ]
+        # m_details = [ "0.000", "0.000", "0.000", "WPos" ]
+        self.mp_axe_x = float(m_details[0])
+        self.mp_axe_y = float(m_details[1])
+        self.mp_axe_z = float(m_details[2])
+        self.wp_axe_x = float(w_details[0])
+        self.wp_axe_y = float(w_details[1])
+        self.wp_axe_z = float(w_details[2])
         # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
-        self.root.ids.pos_x.text = details[0]
-        self.root.ids.pos_y.text = details[1]
-        self.root.ids.pos_z.text = details[2]
-        pprint.pprint((self.axe_x, self.axe_y, self.axe_z))
+        self.root.ids.mpos_x.text = m_details[0]
+        self.root.ids.mpos_y.text = m_details[1]
+        self.root.ids.mpos_z.text = m_details[2]
+        self.root.ids.wpos_x.text = w_details[0]
+        self.root.ids.wpos_y.text = w_details[1]
+        self.root.ids.wpos_z.text = w_details[2]
+#        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
+
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
         print("g_code: {}".format(g_code))
@@ -142,7 +154,7 @@ class ArmApp(App):
 
     def rst_grbl(self):  # Reset GRBL
         print("Reset GRBL")
-        self._send_command("ctrl-x")  # ERREUR 'error: Expected command letter\r\n'
+        self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
 
     def cycle_start(self):  # a tester
         print("Reprise")
@@ -200,7 +212,7 @@ class ArmApp(App):
         self._send_command('$$')  # commande OK
 
     def test(self):
-        self._send_command('?')  # commande pour tests (affichage dans le terminal de Wpos et Mpos)
+        self._send_command('')  # Non attribuée
 
     def save(self, cmd_send_list):
         gcode_export = open('Gcode.ngc', 'w')
