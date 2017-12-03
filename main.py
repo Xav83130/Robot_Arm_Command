@@ -106,7 +106,7 @@ class ArmApp(App):
         self.root.ids.cmd_results.text = ", ".join(lines)
 
     def position_timer(self, delta):
-        print("timer")
+#        print("timer")
         if not self.is_connected():
             return
         result = self._send_command("?")
@@ -136,13 +136,13 @@ class ArmApp(App):
 
 
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
-        print("g_code: {}".format(g_code))
+#        print("g_code: {}".format(g_code))
         self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
         self.serial.flushInput()
         lines = []
         while True:
             line = self.get_line()
-            pprint.pprint(line)
+#            pprint.pprint(line)
             if line == 'ok\r\n':
                 break
             lines.append(line)
@@ -156,35 +156,35 @@ class ArmApp(App):
         print("Reset GRBL")
         self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
 
-    def cycle_start(self):  # a tester
+    def cycle_start(self):  # commande OK
         print("Reprise")
         self._send_command("~")
 
-    def feed_hold(self):    # BUG (la pause s'effectue corrcetement mais ensuite "rond mac"
+    def feed_hold(self):  # commande OK
         print("Pause")
         self._send_command("!")
 
     def rst_xyz(self):  # Reset XYZ
         print("Reset XYZ remise a zero XYZ")
-        self._send_command("G92X0Y0Z0")  # commande OK
+        self._send_command("G92X0Y0Z0")     # commande OK
 
     def rst_x(self):  # Reset X
         print("Reset X remise a zero X")
-        self._send_command("G92 X0")  # commande gcode a revoir
+        self._send_command("G92 X0")        # commande OK
 
     def rst_y(self):  # Reset X
         print("Reset Y remise a zero Y")
-        self._send_command("G92 Y0")  # commande gcode a revoir
+        self._send_command("G92 Y0")        # commande OK
 
     def rst_z(self):  # Reset Z
         print("Reset Z remise a zero Z")
-        self._send_command("G92 Z0")  # commande gcode a revoir
+        self._send_command("G92 Z0")        # commande OK
 
     def home(self):  # Retour X0 Y0 Z0
         print("Retour position X0Y0Z0")
-        self._send_command("G90X0Y0Z0")    # commande OK
+        self._send_command("G90X0Y0Z0")     # commande OK
 
-    def x_move_pos(self):  # move X+. Il faut remplacer la valeur de X(1) par la valeur du curseur "pas".
+    def x_move_pos(self):                   # commande OK
         print("mouvement de X en positif")
         self._send_command("G91X%s" % str(self.root.ids.curseur_pas.value))
 
@@ -209,10 +209,8 @@ class ArmApp(App):
         self._send_command("G91Z-%s" % str(self.root.ids.curseur_pas.value))
 
     def infos(self):
-        self._send_command('$$')  # commande OK
+        self._send_command('$$')            # commande OK
 
-    def test(self):
-        self._send_command('')  # Non attribuée
 
     def save(self, cmd_send_list):
         gcode_export = open('Gcode.ngc', 'w')
