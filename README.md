@@ -1,5 +1,5 @@
 # Robot_Arm_Command
-Python program for robot arm with GRBL
+Python program for robot arm with Kivy and GRBL
 
 #  ATTENTION: programme n'est pas encore fonctionnel, en cours de dev.
 
