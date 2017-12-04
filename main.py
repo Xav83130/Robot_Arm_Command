@@ -8,6 +8,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
+from kivy.uix.textinput import TextInput
 
 import serial
 import serial.serialutil
@@ -225,15 +226,15 @@ class ArmApp(App):
                       size=(400, 100))
         popup.open()
 
+    def save_pos(self, delta=None):
+        self.position_timer(delta)
+        self.root.ids.cmd_send_list.text = "G01X{}Y{}Z{}F{}".format(
+            str(self.root.ids.wpos_x.text),
+            str(self.root.ids.wpos_y.text),
+            str(self.root.ids.wpos_z.text),
+            str(self.root.ids.curseur_vitesse.value)
+        )
 
-'''
-    Bouton 'save pos.' en cours
-
-    def save_pos(self):
-        ("G01X%sY%sZ%F%")%(wpos_axe_x,wpos_axe_y,wpos_axe_z,str(self.root.ids.curseur_vitesse.value),\n)
-
-
-'''
 
 if __name__ == '__main__':
     ArmApp().run()
