@@ -226,5 +226,14 @@ class ArmApp(App):
         popup.open()
 
 
+'''
+    Bouton 'save pos.' en cours
+
+    def save_pos(self):
+        ("G01X%sY%sZ%F%")%(wpos_axe_x,wpos_axe_y,wpos_axe_z,str(self.root.ids.curseur_vitesse.value),\n)
+
+
+'''
+
 if __name__ == '__main__':
     ArmApp().run()
