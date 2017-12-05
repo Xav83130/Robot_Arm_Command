@@ -215,7 +215,7 @@ class ArmApp(App):
 
 
     def save(self, cmd_send_list):
-        gcode_export = open('Gcode.ngc', 'w')
+        gcode_export = open('Gcode.arm', 'w')
         gcode_export.write(str(cmd_send_list))
         gcode_export.close()
         box = BoxLayout()
@@ -229,7 +229,7 @@ class ArmApp(App):
 
     def save_pos(self, delta=None):
         self.position_timer(delta)
-        self.root.ids.cmd_send_list.text += "G90X{}Y{}Z{}F{}\n".format(
+        self.root.ids.cmd_send_list.text += "G01X{}Y{}Z{}F{}\n".format(
             str(self.root.ids.wpos_x.text),
             str(self.root.ids.wpos_y.text),
             str(self.root.ids.wpos_z.text),
