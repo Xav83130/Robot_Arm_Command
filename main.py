@@ -228,7 +228,7 @@ class ArmApp(App):
 
     def save_pos(self, delta=None):
         self.position_timer(delta)
-        self.root.ids.cmd_send_list.text = "G01X{}Y{}Z{}F{}".format(
+        self.root.ids.cmd_send_list.text = "G90X{}Y{}Z{}F{}".format(
             str(self.root.ids.wpos_x.text),
             str(self.root.ids.wpos_y.text),
             str(self.root.ids.wpos_z.text),
