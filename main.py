@@ -61,7 +61,8 @@ class ArmApp(App):
         while self.serial.inWaiting() > 0:
             line = self.get_line()
             lines.append(line)
-        pprint.pprint(lines)
+            pprint.pprint = (lines)
+
         return lines
 
     def connect(self):
@@ -104,7 +105,7 @@ class ArmApp(App):
 
     def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
         lines = self.get_lines()
-        self.root.ids.cmd_results.text = ", ".join(lines)
+        self.root.ids.cmd_results.text = " ".join(lines)
 
     def position_timer(self, delta):
 #        print("timer")
@@ -228,7 +229,7 @@ class ArmApp(App):
 
     def save_pos(self, delta=None):
         self.position_timer(delta)
-        self.root.ids.cmd_send_list.text = "G90X{}Y{}Z{}F{}".format(
+        self.root.ids.cmd_send_list.text += "G90X{}Y{}Z{}F{}\n".format(
             str(self.root.ids.wpos_x.text),
             str(self.root.ids.wpos_y.text),
             str(self.root.ids.wpos_z.text),
