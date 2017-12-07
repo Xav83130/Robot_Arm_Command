@@ -151,7 +151,7 @@ class ArmApp(App):
         return lines
 
     def alarm(self):  # Kill alarm lock
-        print("Je retire l'alarme")
+        self.root.ids.cmd_results.text = "Kill Alarm\n"
         self._send_command("$X")    # commande OK
 
     def rst_grbl(self):  # Reset GRBL
@@ -159,58 +159,59 @@ class ArmApp(App):
         self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
 
     def cycle_start(self):  # commande OK
-        print("Reprise")
+        self.root.ids.cmd_results.text += "Cycle Strat\n"
         self._send_command("~")
 
     def feed_hold(self):  # commande OK
-        print("Pause")
+        self.root.ids.cmd_results.text += "Feed Hold\n"
         self._send_command("!")
 
     def rst_xyz(self):  # Reset XYZ
-        print("Reset XYZ remise a zero XYZ")
+        self.root.ids.cmd_results.text += "Reset X0Y0Z0\n"
         self._send_command("G92X0Y0Z0")     # commande OK
 
     def rst_x(self):  # Reset X
-        print("Reset X remise a zero X")
+        self.root.ids.cmd_results.text += "Reset X0\n"
         self._send_command("G92 X0")        # commande OK
 
     def rst_y(self):  # Reset X
-        print("Reset Y remise a zero Y")
+        self.root.ids.cmd_results.text += "Reset Y0\n"
         self._send_command("G92 Y0")        # commande OK
 
     def rst_z(self):  # Reset Z
-        print("Reset Z remise a zero Z")
+        self.root.ids.cmd_results.text += "Reset Z0\n"
         self._send_command("G92 Z0")        # commande OK
 
     def home(self):  # Retour X0 Y0 Z0
-        print("Retour position X0Y0Z0")
+        self.root.ids.cmd_results.text += "Home\n"
         self._send_command("G90X0Y0Z0")     # commande OK
 
     def x_move_pos(self):                   # commande OK
-        print("mouvement de X en positif")
+#        print("mouvement de X en positif")
         self._send_command("G91X%s" % str(self.root.ids.curseur_pas.value))
 
     def x_move_neg(self):  # move X-
-        print("mouvement de X en negatif")
+#        print("mouvement de X en negatif")
         self._send_command("G91X-%s" % str(self.root.ids.curseur_pas.value))
 
     def y_move_pos(self):  # move Y+
-        print("mouvement de Y en positif")
+#        print("mouvement de Y en positif")
         self._send_command("G91Y%s" % str(self.root.ids.curseur_pas.value))
 
     def y_move_neg(self):  # move Y-
-        print("mouvement de Y en negatif")
+#        print("mouvement de Y en negatif")
         self._send_command("G91Y-%s" % str(self.root.ids.curseur_pas.value))
 
     def z_move_pos(self):  # move Z+
-        print("mouvement de Z en positif")
+#        print("mouvement de Z en positif")
         self._send_command("G91Z%s" % str(self.root.ids.curseur_pas.value))
 
     def z_move_neg(self):  # move Z-
-        print("mouvement de Z en negatif")
+#        print("mouvement de Z en negatif")
         self._send_command("G91Z-%s" % str(self.root.ids.curseur_pas.value))
 
     def infos(self):
+        self.root.ids.cmd_results.text += "Setting GRBL\n"
         self._send_command('$$')            # commande OK
 
 
