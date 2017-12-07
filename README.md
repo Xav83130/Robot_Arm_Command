@@ -1,5 +1,5 @@
 # Robot_Arm_Command
-Python program for robot arm with Kivy and GRBL
+Python program for robot arm with Kivy and GRBL 0.9g
 
 #  ATTENTION: programme n'est pas encore fonctionnel, en cours de dev.
 
@@ -7,9 +7,10 @@ Python program for robot arm with Kivy and GRBL
 
 Todo:
 
-    Affichage des coordonées Wpos
+    View infos GRBL to codeinput
     
-    Save position
-   
+    Bugs correction
+    
+    
     
 ![alt tag](https://github.com/Xav83130/Robot_Arm_Command/blob/master/interface.jpeg)
