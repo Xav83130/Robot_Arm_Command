@@ -61,7 +61,7 @@ class ArmApp(App):
         while self.serial.inWaiting() > 0:
             line = self.get_line()
             lines.append(line)
-            pprint.pprint = (lines)
+            self.root.ids.cmd_results.text += lines
 
         return lines
 
@@ -77,7 +77,7 @@ class ArmApp(App):
             self.update_view_connect()
             while True:
                 line = self.get_line()
-                pprint.pprint(line)
+                self.root.ids.cmd_results.text += line
                 if line == "['$H'|'$X' to unlock]\r\n":
                     break
         except serial.serialutil.SerialException as e:
