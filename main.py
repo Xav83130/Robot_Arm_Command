@@ -103,9 +103,9 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
-    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
-        lines = self.get_lines()
-        self.root.ids.cmd_results.text = " ".join(lines)
+#    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
+#        lines = self.get_lines()
+#        self.root.ids.cmd_results.text = " ".join(lines)
 
     def position_timer(self, delta):
 #        print("timer")
