@@ -92,7 +92,7 @@ class ArmApp(App):
             popup.open()
 
     def disconnect(self):  # deconnection au port serie
-        print("Je me déconnecte du port serie !!")
+#        print("Je me déconnecte du port serie !!")
         self.serial.close()
         self.serial = None
         self.update_view_connect()
@@ -151,7 +151,7 @@ class ArmApp(App):
         return lines
 
     def alarm(self):  # Kill alarm lock
-        self.root.ids.cmd_results.text = "Kill Alarm\n"
+        self.root.ids.cmd_results.text += "Kill Alarm $X\n"
         self._send_command("$X")    # commande OK
 
     def rst_grbl(self):  # Reset GRBL
@@ -159,15 +159,15 @@ class ArmApp(App):
         self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
 
     def cycle_start(self):  # commande OK
-        self.root.ids.cmd_results.text += "Cycle Strat\n"
+        self.root.ids.cmd_results.text += "Cycle Strat ~\n"
         self._send_command("~")
 
     def feed_hold(self):  # commande OK
-        self.root.ids.cmd_results.text += "Feed Hold\n"
+        self.root.ids.cmd_results.text += "Feed Hold !\n"
         self._send_command("!")
 
     def rst_xyz(self):  # Reset XYZ
-        self.root.ids.cmd_results.text += "Reset X0Y0Z0\n"
+        self.root.ids.cmd_results.text += "Reset G92X0Y0Z0\n"
         self._send_command("G92X0Y0Z0")     # commande OK
 
     def rst_x(self):  # Reset X
@@ -211,7 +211,7 @@ class ArmApp(App):
         self._send_command("G91Z-%s" % str(self.root.ids.curseur_pas.value))
 
     def infos(self):
-        self.root.ids.cmd_results.text += "Setting GRBL\n"
+        self.root.ids.cmd_results.text += "Setting GRBL $$\n"
         self._send_command('$$')            # commande OK
 
 
