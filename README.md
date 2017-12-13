@@ -1,9 +1,9 @@
 # Robot_Arm_Command
 Python program for robot arm with Kivy and GRBL 0.9g
 
-#  ATTENTION: programme n'est pas encore fonctionnel, en cours de dev.
+#  ATTENTION: programme en cours de dev.
 
-#  ATTENTION: program is not yet functional, being dev.
+#  ATTENTION: program being dev.
 
 Todo:
 
