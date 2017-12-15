@@ -215,8 +215,8 @@
             text: 'Cycle Start'
             on_press: app.cycle_start()
         Button:
-            text: ''
-#            on_press: app.rst_grbl()
+            text: 'Info grbl'
+            on_press: app.build_grbl()
         Button:
             text: 'Setting'
             on_press: app.infos()
@@ -261,7 +261,7 @@
         Button:
             id: clear
             text: 'Clear'
-            on_press: cmd_send_list.select_all(); cmd_send_list.delete_selection()
+            on_press: cmd_send_list.select_all(); cmd_send_list.delete_selection(); cmd_results.select_all(); cmd_results.delete_selection();
 
 
 #Text input Gcode

@@ -103,10 +103,6 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
-#    def view_input(self): # prévue pour visualiser les infos retourné par grbl dans 'codeinput' ligne 259 du .kv
-#        lines = self.get_lines()
-#        self.root.ids.cmd_results.text = " ".join(lines)
-
     def position_timer(self, delta):
 #        print("timer")
         if not self.is_connected():
@@ -144,19 +140,23 @@ class ArmApp(App):
         lines = []
         while True:
             line = self.get_line()
-#            pprint.pprint(line)
             if line == 'ok\r\n':
                 break
             lines.append(line)
         return lines
 
     def alarm(self):  # Kill alarm lock
-        self.root.ids.cmd_results.text += "Kill Alarm $X\n"
-        self._send_command("$X")    # commande OK
+        a = self._send_command('$X')  # commande OK
+        self.root.ids.cmd_results.text += str(a)
 
-    def rst_grbl(self):  # Reset GRBL
-        print("Reset GRBL")
-        self._send_command("ctrl-x")  # ERREUR 'error: Bad number format\r\n'
+    def build_grbl(self):  # Build info
+        a = self._send_command('$G')  # commande OK
+        self.root.ids.cmd_results.text = str(a)
+
+    def infos(self):
+        all_lines = self._send_command('$$')  # commande OK
+        for line in all_lines:
+            self.root.ids.cmd_results.text += line
 
     def cycle_start(self):  # commande OK
         self.root.ids.cmd_results.text += "Cycle Strat ~\n"
@@ -209,11 +209,6 @@ class ArmApp(App):
     def z_move_neg(self):  # move Z-
 #        print("mouvement de Z en negatif")
         self._send_command("G91Z-%s" % str(self.root.ids.curseur_pas.value))
-
-    def infos(self):
-        self.root.ids.cmd_results.text += "Setting GRBL $$\n"
-        self._send_command('$$')            # commande OK
-
 
     def save(self, cmd_send_list):
         gcode_export = open('Gcode.arm', 'w')
