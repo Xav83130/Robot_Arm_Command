@@ -149,7 +149,7 @@ class ArmApp(App):
         a = self._send_command('$X')  # commande OK
         self.root.ids.cmd_results.text += str(a)
 
-    def build_grbl(self):  # Build info
+    def parser_state(self):  # parser state
         a = self._send_command('$G')  # commande OK
         self.root.ids.cmd_results.text += str(a)
 
@@ -242,8 +242,10 @@ class ArmApp(App):
                                   'Home          = Goto Workposition X0 Y0 Z0\n'
                                   'Feed Hold    = Pause !\n'
                                   'Cycle Start   = Restart cycle ~\n'
-                                  'Info GRBL     =  $I\n'
-                                  'Setting          = $$\n'
+                                  'State            = Parser State $G\n'
+                                  'Setting          = view GRBL setting $$\n'
+                                  'Save Position    = Save Arm position\n'
+                                  'Start               = Start all positions\n'
                              ))
         popup = Popup(title='Help',
                       content=box,
