@@ -14,4 +14,4 @@ Todo:
 
 
 
-![alt tag](https://github.com/Xav83130/Robot_Arm_Command/blob/master/interfacehelp.jpeg)
+![alt tag](https://github.com/Xav83130/Robot_Arm_Command/blob/master/interfacehelp.jpg)
