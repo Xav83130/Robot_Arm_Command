@@ -7,7 +7,7 @@
         rows: 2
         cols: 3
         row_default_height: 26
-        size: 550, 55
+        size: 480, 55
         pos: 0, 530
         Label:
             text: 'Port :'
@@ -62,12 +62,23 @@
 
     BoxLayout:
         size: 70, 55
-        pos: 560, 530
+        pos: 490, 530
         ToggleButton:
             id: viewconnect
             text: 'Connect'
             bolt: True
             state: 'normal'
+
+#help
+
+    BoxLayout:
+        size: 70, 55
+        pos: 565, 530
+        Button:
+            id: help
+            text: 'Help'
+            bolt: True
+            on_press: app.help()
 
 
 #ligne1
@@ -273,7 +284,7 @@
         pos: 10, 72
         TextInput:
             id: cmd_send_list
-            text: 'G17 G90 "keep this line\nG21 "keep this line\n'
+            text: ''
             on_text_validate: app._send_command(self.g_code)
             font_size: 14
             bolt: True

@@ -151,7 +151,7 @@ class ArmApp(App):
 
     def build_grbl(self):  # Build info
         a = self._send_command('$G')  # commande OK
-        self.root.ids.cmd_results.text = str(a)
+        self.root.ids.cmd_results.text += str(a)
 
     def infos(self):
         all_lines = self._send_command('$$')  # commande OK
@@ -231,6 +231,25 @@ class ArmApp(App):
             str(self.root.ids.wpos_z.text),
             str(self.root.ids.curseur_vitesse.value)
         )
+
+    def help(self):
+        box = BoxLayout()
+        box.add_widget(Label(text='Kill alarm     = $X\n'
+                                  'Reset XYZ   = Workposition X0 Y0 Z0\n'
+                                  'Reset X       = Workposition X0\n'
+                                  'Reset Y       = Workposition Y0\n'
+                                  'Reset Z       = Workposition Z0\n'
+                                  'Home          = Goto Workposition X0 Y0 Z0\n'
+                                  'Feed Hold    = Pause !\n'
+                                  'Cycle Start   = Restart cycle ~\n'
+                                  'Info GRBL     =  $I\n'
+                                  'Setting          = $$\n'
+                             ))
+        popup = Popup(title='Help',
+                      content=box,
+                      size_hint=(None, None),
+                      size=(600, 500))
+        popup.open()
 
 
 if __name__ == '__main__':
