@@ -19,24 +19,24 @@ import time
 
 # import usb_serial
 
-    def values_cleanup(string):
-        # string = "MPos:0.000,0.000,0.000"
-        # returns [ "MPos", [ 0.0, 0.0, 0.0 ] ]
-        (name, value_string) = string.split(":")
-        values = value_string.split(",")
-        return [name, [float(x) for x in values]]
+def values_cleanup(string):
+    # string = "MPos:0.000,0.000,0.000"
+    # returns [ "MPos", [ 0.0, 0.0, 0.0 ] ]
+    (name, value_string) = string.split(":")
+    values = value_string.split(",")
+    return [name, [float(x) for x in values]]
 
 
-    def response_cleanup(string):
-        # string = "<Idle|MPos:0.000,0.000,0.000|FS:0,0|WCO:0.000,0.000,0.000>"
-        # returns { "state": "Idle", "MPos": [ 0.0, 0.0, 0.0 ], "FS": [ 0.0, 0.0 ], "WCO": [ 0.0, 0.0, 0.0 ] }
-        elements = string.strip("<>\r\n").split("|")
-        iterator = iter(elements)
-        result = {"state": next(iterator)}
-        for element in iterator:
-            (name, values) = values_cleanup(element)
-            result[name] = values
-        return result
+def response_cleanup(string):
+    # string = "<Idle|MPos:0.000,0.000,0.000|FS:0,0|WCO:0.000,0.000,0.000>"
+    # returns { "state": "Idle", "MPos": [ 0.0, 0.0, 0.0 ], "FS": [ 0.0, 0.0 ], "WCO": [ 0.0, 0.0, 0.0 ] }
+    elements = string.strip("<>\r\n").split("|")
+    iterator = iter(elements)
+    result = {"state": next(iterator)}
+    for element in iterator:
+        (name, values) = values_cleanup(element)
+        result[name] = values
+    return result
 
 
 class Desktop(Widget):
