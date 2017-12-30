@@ -128,13 +128,11 @@ class ArmApp(App):
         result = self._send_command("?")
         if len(result) != 1:
             return
-        result = s.split(":")[1].split(",")
-        return [float(x) for x in result]
         # GRBL1.1f:result[0]: <Idle|MPos:0.000,0.000,0.000|FS:0,0|WCO:0.000,0.000,0.000>
         response = response_cleanup(result[0])
 
         mpos_details = response["MPos"]
-        fs_details = response["FS"]
+#        fs_details = response["FS"]
         wco_details = response["WCO"]
         # wpos_details = [ 0.0, 0.0, 0.0 ]
         # mpos_details = [ 0.0, 0.0, 0.0 ]
