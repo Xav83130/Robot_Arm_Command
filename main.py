@@ -103,36 +103,56 @@ class ArmApp(App):
             serial_ports.append(p[0])
         return serial_ports
 
-    def position_timer(self, delta):
-#        print("timer")
-        if not self.is_connected():
-            return
-        result = self._send_command("?")
-        if len(result) != 1:
-            return
-        # result[0]: '<Idle,MPos:0.000,0.000,0.000,WPos:0.000,0.000,0.000>\r\n' Alarm ou Idle
-        (_, maxes, waxes) = result[0].strip("<>\r\n").split(":")
-        # maxes = "0.000,0.000,0.000,WPos"
-        m_details = maxes.split(",")
-        w_details = waxes.split(",")
-        # w_details = [ "0.000", "0.000", "0.000" ]
-        # m_details = [ "0.000", "0.000", "0.000", "WPos" ]
-        self.mp_axe_x = float(m_details[0])
-        self.mp_axe_y = float(m_details[1])
-        self.mp_axe_z = float(m_details[2])
-        self.wp_axe_x = float(w_details[0])
-        self.wp_axe_y = float(w_details[1])
-        self.wp_axe_z = float(w_details[2])
-        # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinates
-        self.root.ids.mpos_x.text = m_details[0]
-        self.root.ids.mpos_y.text = m_details[1]
-        self.root.ids.mpos_z.text = m_details[2]
-        self.root.ids.wpos_x.text = w_details[0]
-        self.root.ids.wpos_y.text = w_details[1]
-        self.root.ids.wpos_z.text = w_details[2]
-#        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
+    def values_cleanup(string):
+        # string = "MPos:0.000,0.000,0.000"
+        # returns [ "MPos", [ 0.0, 0.0, 0.0 ] ]
+        (name, value_string) = string.split(":")
+        values = value_string.split(",")
+        return [name, [float(x) for x in values]]
 
+    def response_cleanup(string):
+        # string = "<Idle|MPos:0.000,0.000,0.000|FS:0,0|WCO:0.000,0.000,0.000>"
+        # returns { "state": "Idle", "MPos": [ 0.0, 0.0, 0.0 ], "FS": [ 0.0, 0.0 ], "WCO": [ 0.0, 0.0, 0.0 ] }
+        elements = string.strip("<>\r\n").split("|")
+        iterator = iter(elements)
+        result = {"state": next(iterator)}
+        for element in iterator:
+            (name, values) = values_cleanup(element)
+            result[name] = values
+        return result
 
+          def position_timer(self, delta):
+              if not self.is_connected():
+                  return
+              result = self._send_command("?")
+              if len(result) != 1:
+                  return
+              result = s.split(":")[1].split(",")
+              return [float(x) for x in result]
+              # GRBL1.1f:result[0]: <Idle|MPos:0.000,0.000,0.000|FS:0,0|WCO:0.000,0.000,0.000>
+              response = response_cleanup(result[0])
+
+              mpos_details = response["MPos"]
+              fs_details = response["FS"]
+              wco_details = response["WCO"]
+              # wpos_details = [ 0.0, 0.0, 0.0 ]
+              # mpos_details = [ 0.0, 0.0, 0.0 ]
+              self.mp_axe_x = mpos_details[0]
+              self.mp_axe_y = mpos_details[1]
+              self.mp_axe_z = mpos_details[2]
+              self.wp_axe_x = wco_details[0]
+              self.wp_axe_y = wco_details[1]
+              self.wp_axe_z = wco_details[2]
+              # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinate
+              #          self.root.ids.state.text = response["state"]
+              self.root.ids.mpos_x.text = str(mpos_details[0])
+              self.root.ids.mpos_y.text = str(mpos_details[1])
+              self.root.ids.mpos_z.text = str(mpos_details[2])
+              self.root.ids.wpos_x.text = str(wco_details[0])
+              self.root.ids.wpos_y.text = str(wco_details[1])
+              self.root.ids.wpos_z.text = str(wco_details[2])
+
+    #        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
 #        print("g_code: {}".format(g_code))
         self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
