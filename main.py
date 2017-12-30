@@ -59,7 +59,7 @@ class ArmApp(App):
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.position_timer, 0.1)
+        Clock.schedule_interval(self.position_timer, 0.2)
         return Desktop()
 
     def is_connected(self):
@@ -73,6 +73,7 @@ class ArmApp(App):
 
     def get_line(self):
         data = self.serial.readline()
+        pprint.pprint(data)
         return data.decode("utf-8")
 
     def get_lines(self):
@@ -97,7 +98,7 @@ class ArmApp(App):
             while True:
                 line = self.get_line()
                 self.root.ids.cmd_results.text += line
-                if line == "['$H'|'$X' to unlock]\r\n":
+                if line.startswith("Grbl ") and line.endswith(" ['$' for help]\r\n"):
                     break
         except serial.serialutil.SerialException as e:
             popup = Popup(title='System error',
@@ -111,7 +112,7 @@ class ArmApp(App):
             popup.open()
 
     def disconnect(self):  # deconnection au port serie
-#        print("Je me déconnecte du port serie !!")
+        print("Je me déconnecte du port serie !!")
         self.serial.close()
         self.serial = None
         self.update_view_connect()
@@ -133,23 +134,23 @@ class ArmApp(App):
 
         mpos_details = response["MPos"]
 #        fs_details = response["FS"]
-        wco_details = response["WCO"]
+#        wco_details = response["WCO"]
         # wpos_details = [ 0.0, 0.0, 0.0 ]
         # mpos_details = [ 0.0, 0.0, 0.0 ]
         self.mp_axe_x = mpos_details[0]
         self.mp_axe_y = mpos_details[1]
         self.mp_axe_z = mpos_details[2]
-        self.wp_axe_x = wco_details[0]
-        self.wp_axe_y = wco_details[1]
-        self.wp_axe_z = wco_details[2]
+#        self.wp_axe_x = wco_details[0]
+#        self.wp_axe_y = wco_details[1]
+#        self.wp_axe_z = wco_details[2]
         # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinate
         #          self.root.ids.state.text = response["state"]
         self.root.ids.mpos_x.text = str(mpos_details[0])
         self.root.ids.mpos_y.text = str(mpos_details[1])
         self.root.ids.mpos_z.text = str(mpos_details[2])
-        self.root.ids.wpos_x.text = str(wco_details[0])
-        self.root.ids.wpos_y.text = str(wco_details[1])
-        self.root.ids.wpos_z.text = str(wco_details[2])
+#        self.root.ids.wpos_x.text = str(wco_details[0])
+#        self.root.ids.wpos_y.text = str(wco_details[1])
+#        self.root.ids.wpos_z.text = str(wco_details[2])
 
     #        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
