@@ -133,9 +133,9 @@ class ArmApp(App):
         response = response_cleanup(result[0])
 
         mpos_details = response["MPos"]
-        self.mp_axe_x = mpos_details[0]
-        self.mp_axe_y = mpos_details[1]
-        self.mp_axe_z = mpos_details[2]
+        self.mp_axe_x = (round(mpos_details[0], 2))
+        self.mp_axe_y = (round(mpos_details[1], 2))
+        self.mp_axe_z = (round(mpos_details[2], 2))
         self.root.ids.mpos_x.text = str(mpos_details[0])
         self.root.ids.mpos_y.text = str(mpos_details[1])
         self.root.ids.mpos_z.text = str(mpos_details[2])
@@ -143,9 +143,9 @@ class ArmApp(App):
         if "WCO" in response:
             wco_details = response["WCO"]
             # wpos_details = [ 0.0, 0.0, 0.0 ]
-            self.wp_axe_x = wco_details[0]
-            self.wp_axe_y = wco_details[1]
-            self.wp_axe_z = wco_details[2]
+            self.wp_axe_x = (round(wco_details[0], 2))
+            self.wp_axe_y = (round(wco_details[1], 2))
+            self.wp_axe_z = (round(wco_details[2], 2))
             self.root.ids.wpos_x.text = str((mpos_details[0]) - (wco_details[0]))
             self.root.ids.wpos_y.text = str((mpos_details[1]) - (wco_details[1]))
             self.root.ids.wpos_z.text = str((mpos_details[2]) - (wco_details[2]))
