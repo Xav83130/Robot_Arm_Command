@@ -78,7 +78,7 @@ class ArmApp(App):
             while True:
                 line = self.get_line()
                 self.root.ids.cmd_results.text += line
-                if line == "['$H'|'$X' to unlock]\r\n":
+                if line.endswith(" ['$' for help]\r\n"):
                     break
         except serial.serialutil.SerialException as e:
             popup = Popup(title='System error',
