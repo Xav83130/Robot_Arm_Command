@@ -49,17 +49,17 @@ class ArmApp(App):
         # Cette methode permet de creer des variables de classe
         self.serial = None
         # Position initiales des axes
-        self.wp_axe_x = 0.0
-        self.wp_axe_y = 0.0
-        self.wp_axe_z = 0.0
-        self.mp_axe_x = 0.0
-        self.mp_axe_y = 0.0
-        self.mp_axe_z = 0.0
+        self.wp_axe_x = 0.00
+        self.wp_axe_y = 0.00
+        self.wp_axe_z = 0.00
+        self.mp_axe_x = 0.00
+        self.mp_axe_y = 0.00
+        self.mp_axe_z = 0.00
         # La ligne d'en desous permet d'appeler le constructeur de la classe App, important !
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.position_timer, 0.2)
+        Clock.schedule_interval(self.position_timer, 0.07)
         return Desktop()
 
     def is_connected(self):
@@ -146,11 +146,11 @@ class ArmApp(App):
             self.wp_axe_x = wco_details[0]
             self.wp_axe_y = wco_details[1]
             self.wp_axe_z = wco_details[2]
-            self.root.ids.wpos_x.text = str(wco_details[0])
-            self.root.ids.wpos_y.text = str(wco_details[1])
-            self.root.ids.wpos_z.text = str(wco_details[2])
+            self.root.ids.wpos_x.text = str((mpos_details[0]) - (wco_details[0]))
+            self.root.ids.wpos_y.text = str((mpos_details[1]) - (wco_details[1]))
+            self.root.ids.wpos_z.text = str((mpos_details[2]) - (wco_details[2]))
 
-    #        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
+#            pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
 #        print("g_code: {}".format(g_code))
         self.serial.write("{}\r\n".format(g_code).encode('utf-8'))
@@ -244,9 +244,9 @@ class ArmApp(App):
     def save_pos(self, delta=None):
         self.position_timer(delta)
         self.root.ids.cmd_send_list.text += "G01X{}Y{}Z{}F{}\n".format(
-            str(self.root.ids.wpos_x.text),
-            str(self.root.ids.wpos_y.text),
-            str(self.root.ids.wpos_z.text),
+            str(self.root.ids.mpos_x.text),
+            str(self.root.ids.mpos_y.text),
+            str(self.root.ids.mpos_z.text),
             str(self.root.ids.curseur_vitesse.value)
         )
 
