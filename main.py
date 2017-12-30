@@ -133,24 +133,22 @@ class ArmApp(App):
         response = response_cleanup(result[0])
 
         mpos_details = response["MPos"]
-#        fs_details = response["FS"]
-#        wco_details = response["WCO"]
-        # wpos_details = [ 0.0, 0.0, 0.0 ]
-        # mpos_details = [ 0.0, 0.0, 0.0 ]
         self.mp_axe_x = mpos_details[0]
         self.mp_axe_y = mpos_details[1]
         self.mp_axe_z = mpos_details[2]
-#        self.wp_axe_x = wco_details[0]
-#        self.wp_axe_y = wco_details[1]
-#        self.wp_axe_z = wco_details[2]
-        # Mpos = Machine position listed as X,Y,Z coordinates Wpos = Work position listed as X,Y,Z coordinate
-        #          self.root.ids.state.text = response["state"]
         self.root.ids.mpos_x.text = str(mpos_details[0])
         self.root.ids.mpos_y.text = str(mpos_details[1])
         self.root.ids.mpos_z.text = str(mpos_details[2])
-#        self.root.ids.wpos_x.text = str(wco_details[0])
-#        self.root.ids.wpos_y.text = str(wco_details[1])
-#        self.root.ids.wpos_z.text = str(wco_details[2])
+
+        if "WCO" in response:
+            wco_details = response["WCO"]
+            # wpos_details = [ 0.0, 0.0, 0.0 ]
+            self.wp_axe_x = wco_details[0]
+            self.wp_axe_y = wco_details[1]
+            self.wp_axe_z = wco_details[2]
+            self.root.ids.wpos_x.text = str(wco_details[0])
+            self.root.ids.wpos_y.text = str(wco_details[1])
+            self.root.ids.wpos_z.text = str(wco_details[2])
 
     #        pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
