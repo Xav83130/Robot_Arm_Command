@@ -49,17 +49,17 @@ class ArmApp(App):
         # Cette methode permet de creer des variables de classe
         self.serial = None
         # Position initiales des axes
-        self.wp_axe_x = 0.00
-        self.wp_axe_y = 0.00
-        self.wp_axe_z = 0.00
-        self.mp_axe_x = 0.00
-        self.mp_axe_y = 0.00
-        self.mp_axe_z = 0.00
+        self.wp_axe_x = 0.000
+        self.wp_axe_y = 0.000
+        self.wp_axe_z = 0.000
+        self.mp_axe_x = 0.000
+        self.mp_axe_y = 0.000
+        self.mp_axe_z = 0.000
         # La ligne d'en desous permet d'appeler le constructeur de la classe App, important !
         super().__init__()
 
     def build(self):
-        Clock.schedule_interval(self.position_timer, 0.07)
+        Clock.schedule_interval(self.position_timer, 0.05)
         return Desktop()
 
     def is_connected(self):
@@ -133,22 +133,22 @@ class ArmApp(App):
         response = response_cleanup(result[0])
 
         mpos_details = response["MPos"]
-        self.mp_axe_x = (round(mpos_details[0], 2))
-        self.mp_axe_y = (round(mpos_details[1], 2))
-        self.mp_axe_z = (round(mpos_details[2], 2))
-        self.root.ids.mpos_x.text = str(mpos_details[0])
-        self.root.ids.mpos_y.text = str(mpos_details[1])
-        self.root.ids.mpos_z.text = str(mpos_details[2])
+        self.mp_axe_x = mpos_details[0]
+        self.mp_axe_y = mpos_details[1]
+        self.mp_axe_z = mpos_details[2]
+        self.root.ids.mpos_x.text = "{:.3f}".format(mpos_details[0])
+        self.root.ids.mpos_y.text = "{:.3f}".format(mpos_details[1])
+        self.root.ids.mpos_z.text = "{:.3f}".format(mpos_details[2])
 
         if "WCO" in response:
             wco_details = response["WCO"]
             # wpos_details = [ 0.0, 0.0, 0.0 ]
-            self.wp_axe_x = (round(wco_details[0], 2))
-            self.wp_axe_y = (round(wco_details[1], 2))
-            self.wp_axe_z = (round(wco_details[2], 2))
-            self.root.ids.wpos_x.text = str((mpos_details[0]) - (wco_details[0]))
-            self.root.ids.wpos_y.text = str((mpos_details[1]) - (wco_details[1]))
-            self.root.ids.wpos_z.text = str((mpos_details[2]) - (wco_details[2]))
+            self.wp_axe_x = wco_details[0]
+            self.wp_axe_y = wco_details[1]
+            self.wp_axe_z = wco_details[2]
+            self.root.ids.wpos_x.text = "{:.3f}".format((mpos_details[0]) - (wco_details[0]))
+            self.root.ids.wpos_y.text = "{:.3f}".format((mpos_details[1]) - (wco_details[1]))
+            self.root.ids.wpos_z.text = "{:.3f}".format((mpos_details[2]) - (wco_details[2]))
 
 #            pprint.pprint((self.wp_axe_x, self.wp_axe_y, self.wp_axe_z, self.mp_axe_x, self.mp_axe_y, self.mp_axe_z))
     def _send_command(self, g_code):  # _ et méthode privée utilisée pour l'envoi des commandes alarm, x_move_pos ...
